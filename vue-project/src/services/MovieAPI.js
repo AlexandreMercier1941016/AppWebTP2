@@ -18,3 +18,11 @@ export async function getFilteredMoviesByKeyWords(query) {
     const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKey + query, headers);
     return await response.json();
 }
+export async function postAppreciation(id, appreciation) {
+    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKey + query, headers);
+    fetch(baseURL+"movie/"+id+"/rating"+apiKey, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ "value": appreciation })
+    }).then(response => response.json())
+}
