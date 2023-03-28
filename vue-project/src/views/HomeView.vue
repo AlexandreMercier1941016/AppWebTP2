@@ -6,7 +6,7 @@
 
 <script>
 import MovieList from '@/components/MovieList.vue'
-import {getWelcomePageMovieList} from '@/service/fetchProductData.js'
+import {getWelcomePageMovieList} from '@/services/MovieAPI.js'
     export default {
         name: 'App',
   components: {
