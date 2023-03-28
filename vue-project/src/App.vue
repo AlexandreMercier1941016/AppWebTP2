@@ -8,12 +8,8 @@ import MovieList from './components/MovieList.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <MovieList msg="You did it!" />
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/movie">About</RouterLink>
-      </nav>
+
     </div>
   </header>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-list :products="products" :page-size="10"></movie-list>
+    <MovieList :movies="movies" :page-size="10"></MovieList>
   </div>
 </template>
 
@@ -14,17 +14,16 @@ import {getWelcomePageMovies} from '@/services/MovieAPI.js'
   },
   data() {
     return {
-        id: 1,
-        products: null
+        movies: []
     }
     },
     methods : {
         async fetchData() {
             const response=getWelcomePageMovies()
-            this.products = await response.JSON()
+            this.movies = await response.JSON()
         }
     },
-    mounted () { // aura lieu au chargement du component
+    created () { // aura lieu au chargement du component
         this.fetchData();
     },
 }

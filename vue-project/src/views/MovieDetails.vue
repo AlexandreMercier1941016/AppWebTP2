@@ -16,11 +16,12 @@
 <script>
 //67e6614f0a5371f8047de1bf746b514f
     export default {
+        data() {
+            return {
+                movie: Object,
+            }
+        },
         props: {
-            movie: {
-                type: Object,
-                default: null
-            },
             id: {
                 type: Number,
             },
@@ -31,7 +32,7 @@
                 this.movie = await reponse.JSON();
             }
         },
-        mounted(){
+        created(){
             this.fetchMovie();
         }
     }

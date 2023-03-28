@@ -15,14 +15,14 @@
         <button @click="nextPage" :disabled="pageNumber >= pageCount">
           Suivant &gt;
         </button>
-        <ul class="products">
-            <li v-for="movies in sortedFilteredPaginatedProducts" :key="product.id"
-                v-bind:class='{ discontinued: movies.discontinued, selected: selectedProduct === product }'
+        <ul class="movies">
+            <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
+                v-bind:class='{ discontinued: movie.discontinued, selected: selectedMovie === movie }'
                 :title="JSON.stringify(movies)"
-                @click="selectedMovie = product">
-                <span class="name">{{ movies.name }}</span>
-                <span class="description">{{ movies.description }}</span>
-                <span class="price">{{ movies.price }}</span>
+                @click="selectedMovie = movie">
+                <span class="name">{{ movie.name }}</span>
+                <span class="description">{{ movie.description }}</span>
+                <span class="price">{{ movie.price }}</span>
             </li>
         </ul>
         <movie-details :selectedMovie="selectedMovie"></movie-details>
@@ -47,7 +47,7 @@
         data() {
             return {
                 title: "MovieList",
-                selectedProduct: null,
+                selectedmovie: null,
                 filterName: '',
                 sortVoteAverage:'vote_average',
                 sortDate: 'modifiedDate',
@@ -59,12 +59,12 @@
             MovieDetails,
         },
         computed: {
-          filteredProducts() {
+          filteredmovies() {
             let filter = new RegExp(this.filterName, 'i')
-            return this.products.filter(el => el.name.match(filter))
+            return this.movies.filter(el => el.name.match(filter))
           },
-          sortedFilteredProducts() {
-            return [...this.filteredProducts].sort((a,b) => {
+          sortedFilteredmovies() {
+            return [...this.filteredmovies].sort((a,b) => {
               let modifier = 1;
               if(this.sortDir === 'desc') modifier = -1;
               if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
@@ -72,14 +72,14 @@
               return 0;
             })
           },
-          sortedFilteredPaginatedProducts() {
+          sortedFilteredPaginatedMovies() {
             const start = (this.pageNumber-1) * this.pageSize,
                   end = start + this.pageSize;
 
-            return this.sortedFilteredProducts.slice(start, end);
+            return this.sortedFilteredmovies.slice(start, end);
           },
           pageCount() {
-            let l = this.filteredProducts.length,
+            let l = this.filteredmovies.length,
               s = this.pageSize;
             return Math.floor(l / s);
           }
@@ -107,11 +107,11 @@
           },
           nextPage() {
             this.pageNumber++;
-            this.selectedProduct = null;
+            this.selectedmovie = null;
           },
           prevPage() {
             this.pageNumber--;
-            this.selectedProduct = null;
+            this.selectedmovie = null;
           }
         }
     }
@@ -121,12 +121,12 @@
 .filters {
     padding: 10px
   }
-  .products {
+  .movies {
     margin: 0;
     list-style-type: none;
     padding: 0;
   }
-  .products li {
+  .movies li {
     cursor: pointer;
     position: relative;
     left: 0;
@@ -136,34 +136,34 @@
     height: 1.8em;
     border-radius: 4px;
   }
-  .products li:hover {
+  .movies li:hover {
     color: #607D8B;
     background-color: yellow;
     left: .1em;
   } 
-  .products li:hover .name,
-  .products li:hover .price {
+  .movies li:hover .name,
+  .movies li:hover .price {
     color: #607D8B;
     background-color: #FFD800;
     left: .1em;
   } 
-  .products li.selected {
+  .movies li.selected {
     background-color: #0094FF;
     color: white;
   }
-  .products li.selected:hover {
+  .movies li.selected:hover {
     color: white;
   }
-  .products li.selected .name,
-  .products li.selected .price {
+  .movies li.selected .name,
+  .movies li.selected .price {
     background-color: #0026FF;
     color: white;
   }
-  .products .text {
+  .movies .text {
     position: relative;
     top: -3px;
   }
-  .products .name {
+  .movies .name {
     display: inline-block;
     color: white;
     padding: 0.5em 0.7em 0em 0.7em;
@@ -180,7 +180,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .products .price {
+  .movies .price {
     float: right;
     width: 15%;
     color: white;
@@ -194,7 +194,7 @@
     margin-left: .8em;
     border-radius: 0px 4px 4px 0px;
   }
-  .products .description {
+  .movies .description {
     height: 1.8em;
     display: inline-block;
     width: 40%;
@@ -202,7 +202,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .products .discontinued, .products .discontinued * {
+  .movies .discontinued, .movies .discontinued * {
     color: red !important;
   }
 </style>
