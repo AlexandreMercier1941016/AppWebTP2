@@ -1,5 +1,5 @@
 <script setup>
-    import MovieAPI from '@/services/MovieAPI.js';
+    import {getSingleMovie} from '@/services/MovieAPI.js';
 </script>
 <template>
     <div v-if="movie">
@@ -25,6 +25,15 @@
                 type: Number,
             },
         },
+        methods:{
+            async fetchMovie(){
+                const reponse = await getSingleMovie(this.id);
+                this.movie = await reponse.JSON();
+            }
+        },
+        mounted(){
+            this.fetchMovie();
+        }
     }
 </script>
 
