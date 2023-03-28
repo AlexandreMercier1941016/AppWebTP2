@@ -1,5 +1,4 @@
 <script setup>
-    import MovieAPI from '@/services/MovieAPI.js';
 </script>
 <template>
     <div v-if="movie">

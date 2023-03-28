@@ -6,7 +6,7 @@
 
 <script>
 import MovieList from '@/components/MovieList.vue'
-import {getWelcomePageMovieList} from '@/service/fetchProductData.js'
+import {getWelcomePageMovies} from '@/services/MovieAPI.js'
     export default {
         name: 'App',
   components: {
@@ -20,7 +20,7 @@ import {getWelcomePageMovieList} from '@/service/fetchProductData.js'
     },
     methods : {
         async fetchData() {
-            const response = await getWelcomePageMovieList();
+            const response=getWelcomePageMovies()
             this.products = await response.JSON()
         }
     },
