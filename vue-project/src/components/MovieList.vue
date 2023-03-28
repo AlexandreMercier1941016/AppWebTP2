@@ -18,8 +18,8 @@
         <ul class="movies">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 v-bind:class='{ discontinued: movie.discontinued, selected: selectedMovie === movie }'
-                :title="JSON.stringify(movies)"
-                @click="selectedMovie = movie">
+                :title="JSON.stringify(movie)"
+                @click="onSelect(movie)">
                 <span class="name">{{ movie.name }}</span>
                 <span class="description">{{ movie.description }}</span>
                 <span class="price">{{ movie.price }}</span>
@@ -59,12 +59,12 @@
             MovieDetails,
         },
         computed: {
-          filteredmovies() {
+          filteredMovies() {
             let filter = new RegExp(this.filterName, 'i')
             return this.movies.filter(el => el.name.match(filter))
           },
-          sortedFilteredmovies() {
-            return [...this.filteredmovies].sort((a,b) => {
+          sortedfilteredMovies() {
+            return [...this.filteredMovies].sort((a,b) => {
               let modifier = 1;
               if(this.sortDir === 'desc') modifier = -1;
               if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
@@ -76,10 +76,10 @@
             const start = (this.pageNumber-1) * this.pageSize,
                   end = start + this.pageSize;
 
-            return this.sortedFilteredmovies.slice(start, end);
+            return this.sortedfilteredMovies.slice(start, end);
           },
           pageCount() {
-            let l = this.filteredmovies.length,
+            let l = this.filteredMovies.length,
               s = this.pageSize;
             return Math.floor(l / s);
           }
@@ -112,6 +112,9 @@
           prevPage() {
             this.pageNumber--;
             this.selectedmovie = null;
+          },
+          onSelect(movie){
+            this.$router.push({name: 'movie', params: {id: movie.id}})
           }
         }
     }
