@@ -1,4 +1,3 @@
-</script>
 <template>
     <div v-if="movie">
         <h2>{{movie.original_title}}</h2>
