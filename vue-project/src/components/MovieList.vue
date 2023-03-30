@@ -3,9 +3,9 @@
         <h2>{{ title }}</h2>
         <fieldset class="filters">
             Trier par: 
-            <button @click="sort('vote_average')">Nom</button>
-            <button @click="sort('release_date')">Prix</button>
-            <button @click="sort('modifiedDate')">Date</button>
+            <button @click="sort('vote_average')">Vote</button>
+            <button @click="sort('release_date')">Date De Sortie</button>
+            <button @click="sort('modifiedDate')">Date de Modification</button>
             <span>Recherche par nom: <input v-model="filterName" /></span>
         </fieldset>
         <button @click="prevPage" :disabled="pageNumber===1">
@@ -21,8 +21,8 @@
                 :title="JSON.stringify(movie)"
                 @click="onSelect(movie)">
                 <span class="name">{{ movie.name }}</span>
-                <span class="description">{{ movie.description }}</span>
-                <span class="price">{{ movie.price }}</span>
+                <span class="description">{{ movie.homepage }}</span>
+                <span class="release_date">{{ movie.release_date }}</span>
             </li>
         </ul>
         <movie-details :selectedMovie="selectedMovie"></movie-details>
@@ -145,7 +145,7 @@
     left: .1em;
   } 
   .movies li:hover .name,
-  .movies li:hover .price {
+  .movies li:hover .release_date {
     color: #607D8B;
     background-color: #FFD800;
     left: .1em;
@@ -158,7 +158,7 @@
     color: white;
   }
   .movies li.selected .name,
-  .movies li.selected .price {
+  .movies li.selected .release_date {
     background-color: #0026FF;
     color: white;
   }
@@ -183,7 +183,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .movies .price {
+  .movies .release_date {
     float: right;
     width: 15%;
     color: white;
