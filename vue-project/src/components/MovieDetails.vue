@@ -5,13 +5,12 @@
         <h3>{{movie.overview}}</h3>
         <p>Ratings: {{movie.vote_average}}</p>
         <p>Length: {{movie.runtime}}</p>
-        <p>Released Date: {{movie.release_date}}</p>
+        <p>Release Date: {{movie.release_date}}</p>
         <p>Official Site: {{movie.homepage }}</p>
     </div>
 </template>
 
 <script>
-//67e6614f0a5371f8047de1bf746b514f
     export default {
         props: {
             movie: {
