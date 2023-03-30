@@ -20,7 +20,7 @@
                 v-bind:class='{selected: selectedMovie === movie }'
                 :title="JSON.stringify(movie)"
                 @click="onSelect(movie)">
-                <a href="{{onselect(movie)}}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}"></a>
+                <a href="{{onselect(movie)}}"><img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path"></a>
                 <span class="name">{{ movie.title }}</span>
                 <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
@@ -34,7 +34,7 @@
 
 <script>
     import MovieDetails from '@/components/MovieDetails.vue';
-
+    const imgURL="https://image.tmdb.org/t/p/w500"
     export default {
         props: {
             movies: {
