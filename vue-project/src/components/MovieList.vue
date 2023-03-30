@@ -20,8 +20,8 @@
                 v-bind:class='{selected: selectedMovie === movie }'
                 :title="JSON.stringify(movie)"
                 @click="onSelect(movie)">
-                <span class="name">{{ movie.name }}</span>
-                <span class="description">{{ movie.homepage }}</span>
+                <span class="name">{{ movie.title }}</span>
+                <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
             </li>
         </ul>
@@ -201,6 +201,7 @@
     height: 1.8em;
     display: inline-block;
     width: 40%;
+    color:#0026FF;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
