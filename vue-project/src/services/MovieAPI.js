@@ -21,7 +21,7 @@ export async function getFilteredMoviesByKeyWords(query) {
     return await response.json();
 }
 export async function getMovieImage(id) {
-    const response = await fetch(baseURL + "movie/" + id + RESOURCE_NAME_IMAGE + apiKey + query, headers);
+    const response = await fetch(baseURL + "movie/" + id + RESOURCE_NAME_IMAGE + apiKey, headers);
     return await response.json();
 }
 export async function postAppreciation(id, appreciation) {
