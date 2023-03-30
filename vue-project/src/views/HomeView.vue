@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MovieList :movies="movies" :page-size="10"></MovieList>
+    <MovieList :movies="movies" :img="img" :page-size="3"></MovieList>
   </div>
 </template>
 
@@ -14,7 +14,8 @@ import {getWelcomePageMovies} from '@/services/MovieAPI.js'
   },
   data() {
     return {
-        movies: []
+        movies: [],
+        img:''
     }
     },
     methods : {
