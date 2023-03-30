@@ -1,4 +1,3 @@
-<script setup>
 </script>
 <template>
     <div v-if="movie">

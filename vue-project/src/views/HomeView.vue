@@ -20,7 +20,7 @@ import {getWelcomePageMovies} from '@/services/MovieAPI.js'
     created () { // aura lieu au chargement du component
       getWelcomePageMovies().then(response => {
         this.movies = response})
-    },
+ },
 }
 </script>
 
