@@ -8,21 +8,26 @@
             <button @click="sort('modifiedDate')">Date de Modification</button>
             <span>Recherche par nom: <input v-model="filterName" /></span>
         </fieldset>
-        <button @click="prevPage" :disabled="pageNumber===1">
+        <!--<button @click="prevPage" :disabled="pageNumber===1">
           &lt; Précédent
         </button>
         Page {{ pageNumber }}
-        <button @click="nextPage" :disabled="pageNumber >= pageCount">
+        <button @click="nextPage" :disabled="pageNumber >= pageCount">-
           Suivant &gt;
-        </button>
+        </button>-->
         <ul class="movies">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 v-bind:class='{selected: selectedMovie === movie }'
                 :title="JSON.stringify(movie)"
                 @click="onSelect(movie)">
+                <span class="img"></span>
                 <span class="name">{{ movie.title }}</span>
                 <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
+                <span class="movie_img">{{ movie.release_date }}</span>
+                <button @click="onselect(movie)" :disabled="pageNumber >= pageCount">
+                    consulterLeFilm &gt;
+                </button>
             </li>
         </ul>
     </div>
