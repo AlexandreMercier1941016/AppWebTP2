@@ -1,8 +1,12 @@
 <script setup>
     import {getSingleMovie} from '@/services/MovieAPI.js';
-import MovieDetailsVue from '../components/MovieDetails.vue';
-    //<MovieDetailsVue :movie="movie"></MovieDetailsVue>
+    import MovieDetailsVue from '../components/MovieDetails.vue';
 </script>
+<template>
+    <div>
+        <MovieDetailsVue :movie="movie"></MovieDetailsVue>
+    </div>
+  </template>
 
 <script>
     export default {
