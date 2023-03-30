@@ -25,7 +25,6 @@
                 <span class="price">{{ movie.price }}</span>
             </li>
         </ul>
-        <movie-details :selectedMovie="selectedMovie"></movie-details>
     </div>
 </template>
 
@@ -60,8 +59,9 @@
         },
         computed: {
           filteredMovies() {
+            console.log(this.movies)
             let filter = new RegExp(this.filterName, 'i')
-            return this.movies.filter(el => el.name.match(filter))
+            return this.movies.results.filter(el => el.name.match(filter))
           },
           sortedfilteredMovies() {
             return [...this.filteredMovies].sort((a,b) => {

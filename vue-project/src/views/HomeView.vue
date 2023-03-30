@@ -17,9 +17,14 @@ import {getWelcomePageMovies} from '@/services/MovieAPI.js'
         movies: []
     }
     },
+    methods : {
+        async fetchData() {
+            const response=getWelcomePageMovies()
+            this.movies = response
+        }
+    },
     created () { // aura lieu au chargement du component
-      getWelcomePageMovies().then(response => {
-        this.movies = response})
+        this.fetchData();
     },
 }
 </script>

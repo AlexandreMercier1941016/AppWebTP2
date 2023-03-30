@@ -26,15 +26,9 @@
                 type: Number,
             },
         },
-        methods:{
-            async fetchMovie(){
-                const reponse = await getSingleMovie(this.id);
-                this.movie = await reponse.JSON();
-            }
+        mounted() {
+            getSingleMovie().then(response => this.movie = response);
         },
-        created(){
-            this.fetchMovie();
-        }
     }
 </script>
 
