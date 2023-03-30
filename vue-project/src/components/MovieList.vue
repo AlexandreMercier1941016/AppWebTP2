@@ -17,7 +17,7 @@
         </button>
         <ul class="movies">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
-                v-bind:class='{ discontinued: movie.discontinued, selected: selectedMovie === movie }'
+                v-bind:class='{selected: selectedMovie === movie }'
                 :title="JSON.stringify(movie)"
                 @click="onSelect(movie)">
                 <span class="name">{{ movie.name }}</span>
