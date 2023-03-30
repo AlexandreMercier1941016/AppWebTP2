@@ -59,7 +59,7 @@
         },
         computed: {
           filteredMovies() {
-            console.log(this.movies)
+            console.log(this.movies.results)
             let filter = new RegExp(this.filterName, 'i')
             return this.movies.results.filter(el => el.name.match(filter))
           },
