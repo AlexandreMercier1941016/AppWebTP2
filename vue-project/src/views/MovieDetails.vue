@@ -1,7 +1,7 @@
 <script setup>
     import {getSingleMovie} from '@/services/MovieAPI.js';
 import MovieDetailsVue from '../components/MovieDetails.vue';
-    <MovieDetailsVue :movie="movie"></MovieDetailsVue>
+    //<MovieDetailsVue :movie="movie"></MovieDetailsVue>
 </script>
 
 <script>
