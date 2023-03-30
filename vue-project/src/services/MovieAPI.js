@@ -6,7 +6,6 @@ const RESOURCE_NAME_SINGLE_MOVIE = "movie/";
 const RESOURCE_NAME_UPCOMING = "movie/upcoming";
 const RESOURCE_NAME_SEARCH = "search/movie";
 const RESOURCE_NAME_IMAGE = "/images";
-//https://api.themoviedb.org/3/movie/{movie_id}/images?api_key=<<api_key>>&language=en-US
 
 export async function getSingleMovie(id) {
     const response = await fetch(baseURL + RESOURCE_NAME_SINGLE_MOVIE + id + apiKey, headers);
