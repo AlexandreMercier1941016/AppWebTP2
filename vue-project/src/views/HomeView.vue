@@ -24,8 +24,9 @@ import {getWelcomePageMovies} from '@/services/MovieAPI.js'
         }
     },
     created () { // aura lieu au chargement du component
-        this.fetchData();
-    },
+      getWelcomePageMovies().then(response => {
+        this.movies = response})
+ },
 }
 </script>
 
