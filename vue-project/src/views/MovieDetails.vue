@@ -19,6 +19,7 @@ import MovieDetailsVue from '../components/MovieDetails.vue';
             getSingleMovie(this.id).then(response => this.movie = response);
         },
     }
+}
 </script>
 
 <style lang="scss" scoped>
