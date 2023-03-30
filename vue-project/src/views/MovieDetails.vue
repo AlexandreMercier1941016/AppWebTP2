@@ -27,7 +27,7 @@
             },
         },
         mounted() {
-            getSingleMovie().then(response => this.movie = response);
+            getSingleMovie(this.id).then(response => this.movie = response);
         },
     }
 </script>
