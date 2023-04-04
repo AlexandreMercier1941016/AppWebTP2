@@ -1,5 +1,6 @@
 let baseURL = 'https://api.themoviedb.org/3/';
 let apiKey = "?api_key=67e6614f0a5371f8047de1bf746b514f&language=en-US"
+let apiKeyWithoutLanguage = "?api_key=67e6614f0a5371f8047de1bf746b514f"
 let headers = { Accept: "application/json", "Content-Type": "application/json"};
 
 const RESOURCE_NAME_SINGLE_MOVIE = "movie/";
@@ -17,7 +18,7 @@ export async function getWelcomePageMovies() {
     return await response.json();
 }
 export async function getFilteredMoviesByKeyWords(query) {
-    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKey + query, headers);
+    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + query, headers);
     return await response.json();
 }
 export async function getMovieImage(id) {
