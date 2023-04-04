@@ -6,7 +6,7 @@
     <div>
         <MovieDetailsVue :movie="movie"></MovieDetailsVue>
     </div>
-  </template>
+</template>
 
 <script>
     export default {
@@ -19,12 +19,11 @@
             id: {
                 type: Number,
             },
-        created() {
+        },
+        created(){
             getSingleMovie(this.id).then(response => this.movie = response);
-            console.log(this.movie);
         },
     }
-}
 </script>
 
 <style lang="scss" scoped>
