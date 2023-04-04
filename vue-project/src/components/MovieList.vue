@@ -18,13 +18,12 @@
         <ul class="movies">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 v-bind:class='{selected: selectedMovie === movie }'
-                :title="JSON.stringify(movie)"
-                @click="onSelect(movie)">
-                <a href="{{onselect(movie)}}"><img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path"></a>
+                :title="JSON.stringify(movie)">
+                <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" @click="onSelect(movie)">
                 <span class="name">{{ movie.title }}</span>
                 <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
-                <button @click="onselect(movie)" :disabled="pageNumber >= pageCount">
+                <button @click="onSelect(movie)" :disabled="pageNumber >= pageCount">
                     consulterLeFilm &gt;
                 </button>
             </li>
