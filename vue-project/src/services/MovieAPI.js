@@ -18,8 +18,8 @@ export async function getWelcomePageMovies() {
     const response = await fetch(baseURL + RESOURCE_NAME_UPCOMING+ apiKey, headers);
     return await response.json();
 }
-export async function getFilteredMoviesByKeyWords(keywords,year,getGenres) {
-    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + query + "&year=" + year + "&genre=" + genre + "&page=0", headers);
+export async function getFilteredMoviesByKeyWords(keywords,year,genre) {
+    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + keywords + "&year=" + year + "&genre=" + genre + "&page=0", headers);
     return await response.json();
 }
 export async function getMovieImage(id) {
