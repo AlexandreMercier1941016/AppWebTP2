@@ -21,6 +21,7 @@
             },
         created() {
             getSingleMovie(this.id).then(response => this.movie = response);
+            console.log(this.movie);
         },
     }
 }
