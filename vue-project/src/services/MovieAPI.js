@@ -2,7 +2,7 @@ let baseURL = 'https://api.themoviedb.org/3/';
 let apiKey = "?api_key=67e6614f0a5371f8047de1bf746b514f&language=en-US"
 let apiKeyWithoutLanguage = "?api_key=67e6614f0a5371f8047de1bf746b514f"
 let headers = { Accept: "application/json", "Content-Type": "application/json"};
-const GUEST_SESSION_ID = fetch("https://api.themoviedb.org/3/authentication/guest_session/new" + apiKeyWithoutLanguage,headers).json().then(response => GUEST_SESSION_ID = response);
+const GUEST_SESSION_ID = fetch("https://api.themoviedb.org/3/authentication/guest_session/new" + apiKeyWithoutLanguage,headers).json().then(response => { GUEST_SESSION_ID = response.guest_session_id});
 
 const RESOURCE_NAME_SINGLE_MOVIE = "movie/";
 const RESOURCE_NAME_UPCOMING = "movie/upcoming";
