@@ -24,7 +24,7 @@
                 <label for="rating-0">0</label>
                 </span>
                 <button @click="postAppreciation(movie.id,getSelectedRadioButton())">
-                    Évaluer: &gt;
+                    Évaluer
                 </button>
             </fieldset>
         </form>
