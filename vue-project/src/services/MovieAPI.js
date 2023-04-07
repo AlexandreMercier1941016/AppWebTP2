@@ -42,7 +42,7 @@ export async function postAppreciation(id, appreciation) {
     const response = await fetch("https://api.themoviedb.org/3/movie/" + id + "/rating" + apiKeyWithoutLanguage + "&guest_session_id=" + guestSessionId, {
         method: 'POST',
         headers,
-        body: JSON.stringify({ "value": appreciation })
+        body: JSON.stringify({ "value": appreciation*2 })
     });
     return await response.json();
 }
