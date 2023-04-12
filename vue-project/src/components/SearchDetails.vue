@@ -44,7 +44,8 @@ import {getGenres} from '@/services/MovieAPI.js'
                 if(searchQueryGenre==null){
                     searchQueryGenre=""
                 }
-                if(searchQueryYear==null){
+                var regex = "[0-9][0-9][0-9][0-9]";
+                if(searchQueryYear==null || !searchQueryYear.match(regex)){
                     searchQueryYear=""
                 }
                 router.push({name: 'searchMovies', params: {genre: searchQueryGenre,year: searchQueryYear,keyword:searchQuery}})
