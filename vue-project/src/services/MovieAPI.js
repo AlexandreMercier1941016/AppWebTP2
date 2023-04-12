@@ -23,7 +23,7 @@ export async function getWelcomePageMovies() {
     return await response.json();
 }
 export async function getFilteredMoviesByKeyWords(keywords,year,genre) {
-    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + keywords + "&year=" + year + "&genre=" + genre + "&page=0", headers);
+    const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + keywords + "&year=" + year + "&genre=" + genre, headers);
     return await response.json();
 }
 export async function getMovieImage(id) {

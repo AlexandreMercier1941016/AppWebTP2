@@ -38,7 +38,7 @@ function castRouteParams(route) {
 function castRouteParams2(route) {
   return {
     genre: String(route.params.genre),
-    keyword:String(route.params.keyword),
+    keywords:String(route.params.keywords),
     year:String(route.params.keyword)
   }
 }

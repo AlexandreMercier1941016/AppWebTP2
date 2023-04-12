@@ -1,6 +1,6 @@
 <template>
     <div>
-      <MovieList :movies="movies" :img="img" :page-size="9999999"></MovieList>
+      <MovieList :movies="movies" :img="img" :page-size="1000"></MovieList>
     </div>
   </template>
   
@@ -32,7 +32,7 @@ export default {
           }
       },
       created () { // aura lieu au chargement du component
-        getFilteredMoviesByKeyWords().then(response => {
+        getFilteredMoviesByKeyWords(this.$route.query.keywords,this.$route.query.year,this.$route.query.genre).then(response => {
           this.movies = response})
           console.log(this.movies);
    },
