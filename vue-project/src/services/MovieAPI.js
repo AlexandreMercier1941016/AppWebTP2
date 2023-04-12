@@ -18,18 +18,17 @@ export async function getSingleMovie(id) {
     const response = await fetch(baseURL + RESOURCE_NAME_SINGLE_MOVIE + id + apiKey, headers);
     return await response.json();
 }
+
 export async function getWelcomePageMovies() {
     const response = await fetch(baseURL + RESOURCE_NAME_UPCOMING+ apiKey, headers);
     return await response.json();
 }
+
 export async function getFilteredMoviesByKeyWords(keywords,year,genre) {
     const response = await fetch(baseURL + RESOURCE_NAME_SEARCH + apiKeyWithoutLanguage + "&query=" + keywords + "&year=" + year + "&genre=" + genre, headers);
     return await response.json();
 }
-export async function getMovieImage(id) {
-    const response = await fetch(baseURL + "movie/" + id + RESOURCE_NAME_IMAGE + apiKey, headers);
-    return await response.json();
-}
+
 export async function getGenres() {
     const response = await fetch(baseURL + RESOURCE_NAME_GENRE + apiKey, headers);
     return await response.json();

@@ -1,4 +1,5 @@
 <template>
+  <h2>{{ title }}</h2>
     <div v-if="movie">
         <h2>{{movie.original_title}}</h2>
         <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" width="200" style="float:right">
@@ -40,6 +41,11 @@ import { postAppreciation } from '../services/MovieAPI';
                 type: Object,
             },
         },
+        data() {
+            return {
+                title: "Détails du film",
+            }
+        },
         methods: {
           getSelectedRadioButton() {
             var radios = document.getElementsByName('rating');
@@ -57,6 +63,8 @@ import { postAppreciation } from '../services/MovieAPI';
 </script>
 
 <style lang="css" scoped>
+
+/* Source : https://codeconvey.com/css-star-rating-radio-buttons/ */
 .star-cb-group {
   /* remove inline-block whitespace */
   font-size: 0;

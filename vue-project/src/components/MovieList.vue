@@ -35,7 +35,7 @@
         },
         data() {
             return {
-                title: "MovieList",
+                title: "Liste de films",
                 filterName: '',
                 sortVoteAverage:'vote_average',
                 sortDate: 'modifiedDate',

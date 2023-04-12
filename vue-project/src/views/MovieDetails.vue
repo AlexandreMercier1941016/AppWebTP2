@@ -3,6 +3,7 @@
     import MovieDetailsVue from '../components/MovieDetails.vue';
     import SearchDetails from '../components/SearchDetails.vue'
 </script>
+
 <template>
     <div>
         <SearchDetails></SearchDetails>
@@ -31,5 +32,6 @@
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+
 </style>
