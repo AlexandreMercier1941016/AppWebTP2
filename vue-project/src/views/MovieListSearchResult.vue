@@ -7,14 +7,14 @@
   <script>
   import MovieList from '@/components/MovieList.vue'
   //TODO: mettre la bonne methode de MovieAPI
-  import {getWelcomePageMovies} from '@/services/MovieAPI.js'
+  import {getFilteredMoviesByKeyWords} from '@/services/MovieAPI.js'
 export default {
           name: 'App',
     components: {
       MovieList
     },
     props:{
-        keyword: String,
+        keywords: String,
         genre: String,
         year: String
     },
@@ -27,13 +27,14 @@ export default {
       methods : {
           async fetchData() {
             //TODO: mettre la bonne methode pour le search avec les props
-              const response=getWelcomePageMovies()
+              const response=getFilteredMoviesByKeyWords(this.keywords,this.year,this.genre);
               this.movies = response
           }
       },
       created () { // aura lieu au chargement du component
-        getWelcomePageMovies().then(response => {
+        getFilteredMoviesByKeyWords().then(response => {
           this.movies = response})
+          console.log(this.movies);
    },
   }
   </script>

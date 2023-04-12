@@ -4,7 +4,7 @@
             <span >Recherche par nom: <input v-model="searchQuery1" /></span>
             <!--TODO: mettre une liste deroulante avec foreach de movieGenre-->
             <select v-model="searchQueryGenre">
-                <option v-for="genre in movieGenres" :key="genre.id" :value="genre.name">{{ genre.name }}</option>
+                <option v-for="genre in movieGenres" :key="genre.id" v-bind:value="genre.name">{{ genre.name }}</option>
             </select>
             <span>Recherche par année: <input v-model="searchQueryYear" /></span>
             <button @click="searchQuery(searchQuery1,searchQueryGenre,searchQueryYear)">Envoyer</button>
@@ -19,7 +19,7 @@ import {getGenres} from '@/services/MovieAPI.js'
         data(){
             return{
                 movieGenres:[],
-                keyword: '',
+                keywords: '',
                 genre: '',
                 year: '',
                 searchQuery1:"",
@@ -48,7 +48,7 @@ import {getGenres} from '@/services/MovieAPI.js'
                 if(searchQueryYear==null || !searchQueryYear.match(regex)){
                     searchQueryYear=""
                 }
-                router.push({name: 'searchMovies', params: {genre: searchQueryGenre,year: searchQueryYear,keyword:searchQuery}})
+                router.push({name: 'searchMovies', params: {genre: searchQueryGenre,year: searchQueryYear,keywords:searchQuery}})
             },
         },
         created(){
