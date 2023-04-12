@@ -1,16 +1,18 @@
 <template>
     <div>
         <h2>{{ title }}</h2>
-        <ul class="movies">
+        <ul class="movie-grid">
             <li v-for="movie in filteredMovies" :key="movie.id"
                 :title="JSON.stringify(movie)">
                 <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" @click="onSelect(movie)">
+                <div class="movie-info">
                 <span class="name">{{ movie.title }}</span>
                 <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
                 <button @click="onSelect(movie)">
                     consulterLeFilm &gt;
                 </button>
+              </div>
             </li>
         </ul>
     </div>
@@ -74,4 +76,27 @@
 
 <style lang="css" scoped>
 
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.movie-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+}
 </style>

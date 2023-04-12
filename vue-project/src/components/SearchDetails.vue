@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <header>
+        <div>
         <fieldset class="filters">
             <span >Recherche par nom: <input v-model="searchQuery1"  /></span>
             <!--TODO: mettre une liste deroulante avec foreach de movieGenre-->
@@ -10,6 +11,7 @@
             <button @click="searchQuery(searchQuery1,searchQueryGenre,searchQueryYear)">Envoyer</button>
         </fieldset>
     </div>
+    </header>
 </template>
 <script>  
 import router from '../router';  
