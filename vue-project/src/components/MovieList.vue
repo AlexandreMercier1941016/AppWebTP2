@@ -2,14 +2,13 @@
     <div>
         <h2>{{ title }}</h2>
         <ul class="movies">
-            <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
-                v-bind:class='{selected: selectedMovie === movie }'
+            <li v-for="movie in filteredMovies" :key="movie.id"
                 :title="JSON.stringify(movie)">
                 <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" @click="onSelect(movie)">
                 <span class="name">{{ movie.title }}</span>
                 <span class="description">{{ movie.overview }}</span>
                 <span class="release_date">{{ movie.release_date }}</span>
-                <button @click="onSelect(movie)" :disabled="pageNumber >= pageCount">
+                <button @click="onSelect(movie)">
                     consulterLeFilm &gt;
                 </button>
             </li>
@@ -23,7 +22,7 @@
     export default {
         props: {
             movies: {
-                type: Array,
+                type: Object,
                 default: () => []
             },
             pageSize: {
@@ -35,7 +34,6 @@
         data() {
             return {
                 title: "MovieList",
-                selectedmovie: null,
                 filterName: '',
                 sortVoteAverage:'vote_average',
                 sortDate: 'modifiedDate',
@@ -48,41 +46,7 @@
         },
         computed: {
           filteredMovies() {
-            let filter = new RegExp(this.filterName, 'i')
             return this.movies.results/*.filter(el => el.name.match(filter))*/
-          },
-          sortedfilteredMovies() {
-            return [...this.filteredMovies].sort((a,b) => {
-              let modifier = 1;
-              if(this.sortDir === 'desc') modifier = -1;
-              if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
-              if(a[this.sortName] > b[this.sortName]) return 1 * modifier;
-              return 0;
-            })
-          },
-          sortedFilteredPaginatedMovies() {
-            const start = (this.pageNumber-1) * this.pageSize,
-                  end = start + this.pageSize;
-
-            return this.sortedfilteredMovies.slice(start, end);
-          },
-          pageCount() {
-            let l = this.filteredMovies.length,
-              s = this.pageSize;
-            return Math.floor(l / s);
-          }
-        },
-		watch: {
-          // reset pagination when filtering
-          filterName() {
-            this.pageNumber = 1;
-          },
-          // reset pagination when sorting
-          sortName() {
-            this.pageNumber = 1;
-          },
-          sortDir() {
-            this.pageNumber = 1;
           }
         },
         methods: {  

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <SearchDetails></SearchDetails>
+    </div>
+    <div>
       <MovieList :movies="movies" :img="img" :page-size="1000"></MovieList>
     </div>
   </template>
@@ -8,10 +11,12 @@
   import MovieList from '@/components/MovieList.vue'
   //TODO: mettre la bonne methode de MovieAPI
   import {getFilteredMoviesByKeyWords} from '@/services/MovieAPI.js'
+  import SearchDetails from '../components/SearchDetails.vue'
 export default {
           name: 'App',
     components: {
-      MovieList
+      MovieList,
+      SearchDetails
     },
     props:{
         keywords: String,

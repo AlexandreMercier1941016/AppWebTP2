@@ -1,7 +1,5 @@
 <template>
-  <div>
     <SearchDetails></SearchDetails>
-  </div>
   <div>
     <MovieList :movies="movies" :img="img" :page-size="3"></MovieList>
   </div>
