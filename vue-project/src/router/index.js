@@ -19,13 +19,13 @@ const router = createRouter({
       props: castRouteParams
     },
     {
-      path: '/movies/:keyword&:genre&:year',
+      path: '/movies',
       name: 'searchMovies',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/MovieListSearchResult.vue'),
-      props: castRouteParams
+      props: castRouteParams2
     },
   ]
 })
@@ -33,6 +33,13 @@ const router = createRouter({
 function castRouteParams(route) {
   return {
     id: Number(route.params.id)
+  }
+}
+function castRouteParams2(route) {
+  return {
+    genre: String(route.params.genre),
+    keyword:String(route.params.keyword),
+    year:String(route.params.keyword)
   }
 }
 

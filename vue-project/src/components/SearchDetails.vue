@@ -10,7 +10,8 @@
     </div>
 </template>
 
-<script>    
+<script>  
+import router from '../router';  
     export default {
         data(){
             return{
@@ -22,7 +23,16 @@
         methods: {  
 
             searchQuery(searchQuery,searchQueryGenre,searchQueryYear){
-            this.$router.push({name: 'searchMovies', params: {genre: searchQueryGenre,year: searchQueryYear,keyword:searchQuery}})
+                if(searchQuery==null){
+                    searchQuery=""
+                }
+                if(searchQueryGenre==null){
+                    searchQueryGenre=""
+                }
+                if(searchQueryYear==null){
+                    searchQueryYear=""
+                }
+                router.push({name: 'searchMovies', params: {genre: searchQueryGenre,year: searchQueryYear,keyword:searchQuery}})
           }
         }
     }

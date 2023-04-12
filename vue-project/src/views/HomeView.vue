@@ -1,5 +1,8 @@
 <template>
   <div>
+    <SearchDetails></SearchDetails>
+  </div>
+  <div>
     <MovieList :movies="movies" :img="img" :page-size="3"></MovieList>
   </div>
 </template>
@@ -7,11 +10,13 @@
 <script>
 import MovieList from '@/components/MovieList.vue'
 import {getWelcomePageMovies} from '@/services/MovieAPI.js'
+import SearchDetails from '../components/SearchDetails.vue'
     export default {
         name: 'App',
   components: {
-    MovieList
-  },
+    MovieList,
+    SearchDetails
+},
   data() {
     return {
         movies: [],

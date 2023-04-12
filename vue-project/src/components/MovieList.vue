@@ -1,20 +1,6 @@
 <template>
     <div>
         <h2>{{ title }}</h2>
-        <fieldset class="filters">
-            Trier par: 
-            <button @click="sort('vote_average')">Vote</button>
-            <button @click="sort('release_date')">Date De Sortie</button>
-            <button @click="sort('modifiedDate')">Date de Modification</button>
-            <span>Recherche par nom: <input v-model="filterName" /></span>
-        </fieldset>
-        <!--<button @click="prevPage" :disabled="pageNumber===1">
-          &lt; Précédent
-        </button>
-        Page {{ pageNumber }}
-        <button @click="nextPage" :disabled="pageNumber >= pageCount">-
-          Suivant &gt;
-        </button>-->
         <ul class="movies">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 v-bind:class='{selected: selectedMovie === movie }'
