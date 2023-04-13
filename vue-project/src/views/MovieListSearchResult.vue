@@ -42,8 +42,6 @@
       }
     },
     created () {
-      //getFilteredMoviesByKeyWords(this.$route.query.keywords,this.$route.query.year,this.$route.query.genre).then(response => {
-      //this.movies = response})
       this.fetchData()
    },
    updated () {

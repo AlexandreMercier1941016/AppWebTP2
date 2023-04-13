@@ -64,11 +64,6 @@
                   end = start + this.pageSize;
             return this.sortedfilteredMovies.slice(start, end);
           },
-          pageCount() {
-            let l = this.filteredMovies.length,
-              s = this.pageSize;
-            return Math.floor(l / s);
-          }
         },
         methods: {  
           onSelect(movie){
