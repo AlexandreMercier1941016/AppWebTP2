@@ -2,7 +2,7 @@
     <div>
         <h2>{{ title }}</h2>
         <ul class="movie-grid">
-            <li v-for="movie in filteredMovies" :key="movie.id"
+            <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 :title="JSON.stringify(movie)">
                 <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" @click="onSelect(movie)">
                 <div class="movie-info">
@@ -48,25 +48,29 @@
         },
         computed: {
           filteredMovies() {
-            return this.movies.results/*.filter(el => el.name.match(filter))*/
+            return this.movies.results
+          },
+          sortedfilteredMovies() {
+            return [...this.filteredMovies].sort((a,b) => {
+              let modifier = 1;
+              if(this.sortDir === 'desc') modifier = -1;
+              if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
+              if(a[this.sortName] > b[this.sortName]) return 1 * modifier;
+              return 0;
+            })
+          },
+          sortedFilteredPaginatedMovies() {
+            const start = (this.pageNumber-1) * this.pageSize,
+                  end = start + this.pageSize;
+            return this.sortedfilteredMovies.slice(start, end);
+          },
+          pageCount() {
+            let l = this.filteredMovies.length,
+              s = this.pageSize;
+            return Math.floor(l / s);
           }
         },
         methods: {  
-          sort:function(s) {
-            //if s == current sort, reverse order
-            if(s === this.sortName) {
-              this.sortDir = this.sortDir==='asc'?'desc':'asc';
-            }
-            this.sortName = s;
-          },
-          nextPage() {
-            this.pageNumber++;
-            this.selectedmovie = null;
-          },
-          prevPage() {
-            this.pageNumber--;
-            this.selectedmovie = null;
-          },
           onSelect(movie){
             this.$router.push({name: 'movie', params: {id: movie.id}})
           }

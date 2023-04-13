@@ -34,13 +34,20 @@
     },
     methods : {
       async fetchData() {
-        const response=getFilteredMoviesByKeyWords(this.keywords,this.year,this.genre);
+        const response=await getFilteredMoviesByKeyWords(this.$route.query.keywords,this.$route.query.year,this.$route.query.genre);
         this.movies = response
+      },
+      toUpdate(){
+        location.reload()
       }
     },
     created () {
-      getFilteredMoviesByKeyWords(this.$route.query.keywords,this.$route.query.year,this.$route.query.genre).then(response => {
-      this.movies = response})
+      //getFilteredMoviesByKeyWords(this.$route.query.keywords,this.$route.query.year,this.$route.query.genre).then(response => {
+      //this.movies = response})
+      this.fetchData()
+   },
+   updated () {
+      this.fetchData()
    },
   }
   </script>

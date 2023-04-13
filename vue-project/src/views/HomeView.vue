@@ -44,9 +44,8 @@ import SearchDetails from '../components/SearchDetails.vue'
 
 .basic-grid {
   display: grid;
-  grid-template-rows: repeat(30, 0fr);
-  gap: 20px;
-  padding: 20px;
+  grid-template-rows: repeat(0, 0fr);
+  text-align: center;
 }
 
 </style>
