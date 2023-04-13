@@ -25,7 +25,7 @@
         props: {
             movies: {
                 type: Object,
-                default: () => []
+                default: () => ({})
             },
             pageSize: {
                 type: Number,

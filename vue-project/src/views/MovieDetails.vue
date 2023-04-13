@@ -6,9 +6,6 @@
 
 <template>
     <div>
-        <SearchDetails></SearchDetails>
-    </div>
-    <div>
         <MovieDetailsVue :movie="movie"></MovieDetailsVue>
     </div>
 </template>
@@ -27,8 +24,8 @@
     },
     created() {
         getSingleMovie(this.id).then(response => this.movie = response);
-    },
-    components: { SearchDetails }
+    }/*,
+    components: { SearchDetails }*/
 }
 </script>
 

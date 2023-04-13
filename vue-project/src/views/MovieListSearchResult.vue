@@ -1,13 +1,7 @@
 <template>
-
-    <div>
-        <SearchDetails></SearchDetails>
-    </div>
-
     <div>
       <MovieList :movies="movies" :img="img" :page-size="1000"></MovieList>
     </div>
-
   </template>
   
 <script>
