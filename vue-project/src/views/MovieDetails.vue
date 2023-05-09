@@ -1,7 +1,6 @@
 <script setup>
     import {getSingleMovie} from '@/services/MovieAPI.js';
     import MovieDetailsVue from '../components/MovieDetails.vue';
-    import SearchDetails from '../components/SearchDetails.vue'
 </script>
 
 <template>
@@ -24,8 +23,7 @@
     },
     created() {
         getSingleMovie(this.id).then(response => this.movie = response);
-    }/*,
-    components: { SearchDetails }*/
+    }
 }
 </script>
 

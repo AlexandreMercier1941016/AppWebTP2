@@ -1,5 +1,4 @@
 <script setup>
-import { useUserStore } from '../store/userStore.js';
 </script>
 <template>
     <div>
@@ -34,27 +33,30 @@ import { useUserStore } from '../store/userStore.js';
 
 <script>
     import{getLoginToken}from '@/services/MovieAPI.js'
-    import router from '../router';
-    const store=useUserStore();
+    import { useUserStore } from '../store/userStore.js';
     export default {
         data(){
             return{
             errorMessage:""
             ,disable:false
             }
+        },setup(){
+           
+            const store= useUserStore()
+            return { store }
         }
         ,methods: {
             async getTokenFromLogin(username,password){
-                let token= await getLoginToken(username,password)
-                if(token==null||token==''){
-                    this.errorMessage="l'utilisateur ou le mot de passe est invalide"
-                    console.log("erreur lancé")
-                }else{
-                    store.setToken(token);
-                    store.setName(username);
+                try {
+                    let token= await getLoginToken(username,password)
+                    this.store.setToken(token);
+                    this.store.setName(username);
                     this.errorMessage="Connexion effectué avec succès!"
                     this.disable=true;
-                    setTimeout(() => {  router.push({path:'movies'}); }, 4000);
+                    setTimeout(() => {  this.$router.go(-1); }, 4000);
+                } catch (error) {
+                    this.errorMessage="l'utilisateur ou le mot de passe est invalide"
+                    console.log(error)
                 }
             }
         }
