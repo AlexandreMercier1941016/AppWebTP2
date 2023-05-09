@@ -8,6 +8,24 @@ const RESOURCE_NAME_UPCOMING = "movie/upcoming";
 const RESOURCE_NAME_SEARCH = "search/movie";
 const RESOURCE_NAME_IMAGE = "/images";
 const RESOURCE_NAME_GENRE = "genre/movie/list";
+const RESOURCE_LOGIN="/login";
+
+//methode pour le tp3
+//a fixer pour la route login
+export async function getLoginToken(username,password){
+    
+        const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/login', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({email: username, password: password})
+        })
+        const content = await rawResponse.json();
+        console.log(content.token)
+        return content.token;
+}
 
 export async function setUpGuestSessionId() {
     const response = await fetch("https://api.themoviedb.org/3/authentication/guest_session/new" + apiKeyWithoutLanguage, headers);

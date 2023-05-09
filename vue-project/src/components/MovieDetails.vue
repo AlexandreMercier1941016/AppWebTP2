@@ -2,7 +2,10 @@
   <h2>{{ title }}</h2>
     <div v-if="movie">
         <h2>{{movie.original_title}}</h2>
-        <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" width="200" style="float:right">
+        <!--img si poster path-->
+        <img  v-if="movie.poster_path" :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" width="200" style="float:right">
+        <!--img si il n'y a pas de poster_path-->
+        <img v-else :src="'https://placehold.co/400x400'" style="float:right">
         <h3>{{movie.overview}}</h3>
         <p>Ratings: {{movie.vote_average}}</p>
         <p>Length: {{movie.runtime}} minutes</p>
