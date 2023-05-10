@@ -23,9 +23,46 @@ export async function getLoginToken(username,password){
           body: JSON.stringify({email: username, password: password})
         })
         const content = await rawResponse.json();
-        console.log(content.token)
         return content.token;
 }
+export async function getUserInfo(token){
+    const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization':'Bearer '+token
+        },
+
+      })
+      const content = await rawResponse.json();
+      return content;
+}
+export async function updateCurrentUser(email,nom,prenom){
+    const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user', {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: email, first_name: prenom,last_name:nom})
+      })
+      const content = await rawResponse.json();
+      return content.token;
+}
+export async function createUser(email,password,name,surname){
+    const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/users', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: email, password: password,last_name:surname,first_name:name})
+      })
+      const content = await rawResponse.json();
+      return content.token;
+}
+
 
 export async function setUpGuestSessionId() {
     const response = await fetch("https://api.themoviedb.org/3/authentication/guest_session/new" + apiKeyWithoutLanguage, headers);
