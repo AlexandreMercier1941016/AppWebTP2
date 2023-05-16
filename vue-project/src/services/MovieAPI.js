@@ -77,3 +77,8 @@ export async function getAllFilms() {
     return await response.json();
 }
 
+export async function getOneFilm(id) {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id, headers);
+    return await response.json();
+}
+
