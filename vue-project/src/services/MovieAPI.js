@@ -82,3 +82,7 @@ export async function getOneFilm(id) {
     return await response.json();
 }
 
+export async function getActorsForOneFilm(id) {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id + "/actors", headers);
+    return await response.json();
+}
