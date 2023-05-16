@@ -72,3 +72,8 @@ export async function getAllActors() {
     return await response.json();
 }
 
+export async function getAllFilms() {
+    const response = await fetch(NEW_BASE_URL + "/films", headers);
+    return await response.json();
+}
+
