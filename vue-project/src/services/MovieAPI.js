@@ -86,3 +86,29 @@ export async function getActorsForOneFilm(id) {
     const response = await fetch(NEW_BASE_URL + "/films/" + id + "/actors", headers);
     return await response.json();
 }
+
+export async function postFilm(id,created_at,updated_at,title,release_year,length,description,rating,language_id,special_features,image) {
+    /*const guestSession = await setUpGuestSessionId();
+    const guestSessionId = guestSession.guest_session_id;*/
+    //Faire la connexion avec le token
+
+
+    const response = await fetch(NEW_BASE_URL + "/films", {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ 
+            "id": id,
+            "created_at": created_at,
+            "updated_at": updated_at,
+            "title": title,
+            "release_year": release_year,
+            "length": length,
+            "description": description,
+            "rating": rating,
+            "language_id": language_id,
+            "special_features": special_features,
+            "image": image
+        })
+    });
+    return await response.json();
+}
