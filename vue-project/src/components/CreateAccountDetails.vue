@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ checkIfUserConnectedOrNot() }}
             <form id="rendered-form">
                 <div v-if="enable">
                     <div class="rendered-form">
@@ -106,24 +105,25 @@
                 errorMessage:"",
                 isLoggedIn:false,
                 changePassword:false,
-                enable:true
+                enable:true,
             }
 
         },setup(){
-           
             const store= useUserStore()
             return { store }
 
-        },methods:{
+        },
+        methods:{
             async checkIfUserConnectedOrNot(){
                 try {
                     const user= await getUserInfo(this.store.getToken)
-                    this.isLoggedIn=true;
+                    if(user.message!="Unauthenticated."){
+                        this.isLoggedIn=true;
+                    }
 
                 } catch (error) {
                     console.log("erreur dans le create Account detail")
                 }
-                
             },
             isUserConnected(){
                 if(this.isLoggedIn){
@@ -132,17 +132,17 @@
                     return "S'inscrire"
                 }
             },
-            sendUser(){
+            async sendUser(){
                 try {
                     this.validateFormInput()
                     if(this.isLoggedIn){
                         //modif here
-                        updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom,this.store.getToken)
+                        await updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom,this.store.getToken)
                         this.errorMessage="utilisateur mis a jour !"
                     }else if(this.changePassword){
                         // update password here
                         if(this.password==this.confirmPassword){
-                            updateCurrentUserPassword(this.password,this.store.getToken)
+                            await updateCurrentUserPassword(this.password,this.store.getToken)
                         }
                         else{
                             this.errorMessage="les mots de passe ne sont pas pareil"
@@ -150,10 +150,11 @@
                     }
                     else{
                         //add here
-                        createUser(this.nomUtilisateur,this.password,this.Prenom,this.Nom)
+                        await createUser(this.nomUtilisateur,this.password,this.Prenom,this.Nom)
                         this.errorMessage="utilisateur créé !"
                         
                     }
+                    //disable form input
                     this.enable=false;
                 } catch (error) {
                     this.errorMessage=error
@@ -178,6 +179,8 @@
                     this.changePassword=true;
                 }
             }
+        },beforeMount(){
+            this.checkIfUserConnectedOrNot()
         }
         
     }
