@@ -93,6 +93,8 @@
     import{getUserInfo}from '@/services/MovieAPI.js'
     import{createUser}from '@/services/MovieAPI.js'
     import{updateCurrentUser}from '@/services/MovieAPI.js'
+    import{updateCurrentUserPassword}from '@/services/MovieAPI.js'
+    //missing import for update password
     export default {
         data(){
             return{
@@ -135,10 +137,16 @@
                     this.validateFormInput()
                     if(this.isLoggedIn){
                         //modif here
-                        updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom)
+                        updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom,this.store.getToken)
                         this.errorMessage="utilisateur mis a jour !"
                     }else if(this.changePassword){
                         // update password here
+                        if(this.password==this.confirmPassword){
+                            updateCurrentUserPassword(this.password,this.store.getToken)
+                        }
+                        else{
+                            this.errorMessage="les mots de passe ne sont pas pareil"
+                        }
                     }
                     else{
                         //add here

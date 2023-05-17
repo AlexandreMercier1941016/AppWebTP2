@@ -38,17 +38,31 @@ export async function getUserInfo(token){
       const content = await rawResponse.json();
       return content;
 }
-export async function updateCurrentUser(email,nom,prenom){
+export async function updateCurrentUser(email,nom,prenom,token){
     const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user', {
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization':'Bearer '+token
         },
         body: JSON.stringify({email: email, first_name: prenom,last_name:nom})
       })
       const content = await rawResponse.json();
       return content.token;
+}
+export async function updateCurrentUserPassword(password,token){
+  const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user/password', {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+token
+      },
+      body: JSON.stringify({password: password})
+    })
+    const content = await rawResponse.json();
+    return content.token;
 }
 export async function createUser(email,password,name,surname){
     const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/users', {
