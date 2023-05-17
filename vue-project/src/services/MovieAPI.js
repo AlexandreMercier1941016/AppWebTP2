@@ -9,6 +9,7 @@ const RESOURCE_NAME_SEARCH = "search/movie";
 const RESOURCE_NAME_IMAGE = "/images";
 const RESOURCE_NAME_GENRE = "genre/movie/list";
 const RESOURCE_LOGIN="/login";
+const NEW_BASE_URL = "https://laravel-e23.herokuapp.com/api/";
 
 //methode pour le tp3
 //a fixer pour la route login
@@ -112,5 +113,27 @@ export async function postAppreciation(id, appreciation) {
         headers,
         body: JSON.stringify({ "value": appreciation*2 })
     });
+    return await response.json();
+}
+
+
+
+export async function getAllActors() {
+    const response = await fetch(NEW_BASE_URL + "/actors", headers);
+    return await response.json();
+}
+
+export async function getAllFilms() {
+    const response = await fetch(NEW_BASE_URL + "/films", headers);
+    return await response.json();
+}
+
+export async function getOneFilm(id) {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id, headers);
+    return await response.json();
+}
+
+export async function getActorsForOneFilm(id) {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id + "/actors", headers);
     return await response.json();
 }
