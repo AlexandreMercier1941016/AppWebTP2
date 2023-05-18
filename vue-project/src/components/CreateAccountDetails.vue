@@ -88,6 +88,7 @@
 </template>
 
 <script>
+
     import { useUserStore } from '../store/userStore.js';
     import{getUserInfo}from '@/services/MovieAPI.js'
     import{createUser}from '@/services/MovieAPI.js'

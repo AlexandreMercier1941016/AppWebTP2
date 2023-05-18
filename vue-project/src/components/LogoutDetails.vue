@@ -1,6 +1,7 @@
 <template>
     <div>
         <p><a @click="onClickAction()">{{this.showLoggedInText()}}</a></p>
+        <p><a @click="updateOrCreateUser()">{{this.showAccountUpdateInText()}}</a></p>
     </div>
 </template>
 
@@ -24,6 +25,14 @@
                     return "se connecter"
                 }
             },
+            showAccountUpdateInText(){
+                if(this.isLoggedIn()){
+                    return "Modifier le compte";
+                }else{
+                    return "s'inscire"
+                }
+            },
+
             isLoggedIn(){
                 if(this.store.getToken!="user"){
                     return true
@@ -42,6 +51,9 @@
                 }else{
                     this.$router.push({name:'login'})
                 }
+            },
+            updateOrCreateUser(){
+                this.$router.push({name:'account'}) 
             }
         }
     }
