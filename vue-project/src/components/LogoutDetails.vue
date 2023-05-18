@@ -2,6 +2,7 @@
     <div>
         <p><a @click="onClickAction()">{{this.showLoggedInText()}}</a></p>
         <p><a @click="updateOrCreateUser()">{{this.showAccountUpdateInText()}}</a></p>
+        <p><a @click="goHomeButton()">home</a></p>
     </div>
 </template>
 
@@ -29,8 +30,11 @@
                 if(this.isLoggedIn()){
                     return "Modifier le compte";
                 }else{
-                    return "s'inscire"
+                    return "s'inscrire"
                 }
+            },
+            goHomeButton(){
+                this.$router.push({name:'home'})
             },
 
             isLoggedIn(){
