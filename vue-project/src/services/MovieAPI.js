@@ -152,6 +152,31 @@ export async function getActorsForOneFilm(id) {
     return await response.json();
 }
 
+
+export async function postFilm(id,created_at,updated_at,title,release_year,length,description,rating,language_id,special_features,image) {
+    const response = await fetch(NEW_BASE_URL + "/films", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+          },
+        body: JSON.stringify({ 
+            "id": id,
+            "created_at": created_at,
+            "updated_at": updated_at,
+            "title": title,
+            "release_year": release_year,
+            "length": length,
+            "description": description,
+            "rating": rating,
+            "language_id": language_id,
+            "special_features": special_features,
+            "image": image
+        })
+    });
+    return await response.json();
+}
 export async function postMovieCritic(token,user_id,user_name,score,commentaire,movieID){
     
   const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/films/'+movieID+'/critics', {
@@ -178,4 +203,49 @@ export async function removeMovieFromBd(token,movieID){
   })
   const content = await rawResponse.json();
   return content.token;
+}
+
+export async function postCritic(token,id,created_at,updated_at,user_id,film_id,score,comment) {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id + "/critics", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+          }
+          ,
+        body: JSON.stringify({ 
+            "id": id,
+            "created_at": created_at,
+            "updated_at": updated_at,
+            "user_id": user_id,
+            "film_id": film_id,
+            "score": score,
+            "comment": comment
+        })
+    });
+    return await response.json();
+}
+
+export async function postUser(id,remember_token,created_at,updated_at,password,email,last_name,first_name,role_id) {
+    const response = await fetch(NEW_BASE_URL + "/users" , {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+          ,
+        body: JSON.stringify({ 
+            "id": id,
+            "remember_token": remember_token,
+            "created_at": created_at,
+            "updated_at": updated_at,
+            "password": password,
+            "email": email,
+            "last_name": last_name,
+            "first_name": first_name,
+            "role_id": role_id
+        })
+    });
+    return await response.json();
 }
