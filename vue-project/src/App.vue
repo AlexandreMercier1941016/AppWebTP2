@@ -2,7 +2,7 @@
   <header class="basic-grid">
     <SearchDetails></SearchDetails>
     <h1>Bienvenue !</h1>
-    <LogoutDetails></LogoutDetails>
+        <LogoutDetails></LogoutDetails>
   </header>
   <RouterView />
 </template>
@@ -10,7 +10,7 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import SearchDetails from './components/SearchDetails.vue'
-import LogoutDetails from './components/LogoutDetails.vue'
+import LogoutDetails from './components/NavigationDetails.vue'
 
 export default {
   components: {
