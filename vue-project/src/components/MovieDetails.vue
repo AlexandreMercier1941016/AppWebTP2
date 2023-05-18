@@ -11,27 +11,6 @@
         <p>Length: {{movie.runtime}} minutes</p>
         <p>Release Date: {{movie.release_date}}</p>
         <p>Official Site: {{movie.homepage }}</p>
-        <!--<form>
-            <fieldset>
-                <span class="star-cb-group">
-                <input type="radio" id="rating-5" name="rating" value="5" />
-                <label for="rating-5">5</label>
-                <input type="radio" id="rating-4" name="rating" value="4" />
-                <label for="rating-4">4</label>
-                <input type="radio" id="rating-3" name="rating" value="3" />
-                <label for="rating-3">3</label>
-                <input type="radio" id="rating-2" name="rating" value="2" />
-                <label for="rating-2">2</label>
-                <input type="radio" id="rating-1" name="rating" value="1" />
-                <label for="rating-1">1</label>
-                <input type="radio" id="rating-0" name="rating" value="0" checked="checked" class="star-cb-clear" />
-                <label for="rating-0">0</label>
-                </span>
-                <button @click.prevent="submitAppreciation">
-                    Envoyer
-                </button>
-            </fieldset>
-        </form>-->
         <div v-if="isAdmin">
           <p>retirer le film</p>
           <button @click="firstRemoveButton()">retirer le film</button>
@@ -49,21 +28,21 @@
                     <br>
                     <span class="formbuilder-required">*</span>
                 </label>
-                <input v-model="commentaire" type="text" class="form-control" name="commentaire" maxlength="255" id="commentaire" aria-required="true">
+                <input  v-model="commentaire" type="text" class="form-control" name="commentaire" maxlength="255" id="commentaire" aria-required="true">
             </div> 
             <fieldset class="rate">
-              <input type="radio" id="rating10" name="review" value="5" /><label for="rating10" title="5 stars"></label>
-              <input type="radio" id="rating9" name="review" value="4.5" /><label class="half" for="rating9" title="4 1/2 stars"></label>
-              <input type="radio" id="rating8" name="review" value="4" /><label for="rating8" title="4 stars"></label>
-              <input type="radio" id="rating7" name="review" value="3.5" /><label class="half" for="rating7" title="3 1/2 stars"></label>
-              <input type="radio" id="rating6" name="review" value="3" /><label for="rating6" title="3 stars"></label>
-              <input type="radio" id="rating5" name="review" value="2.5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
-              <input type="radio" id="rating4" name="review" value="2" /><label for="rating4" title="2 stars"></label>
-              <input type="radio" id="rating3" name="review" value="1.5" /><label class="half" for="rating3" title="1 1/2 stars"></label>
-              <input type="radio" id="rating2" name="review" value="1" /><label for="rating2" title="1 star"></label>
-              <input type="radio" id="rating1" name="review" value="0.5" /><label class="half" for="rating1" title="1/2 star"></label>
+              <input v-model="starValue" type="radio" id="rating10" name="review" :value="'5'" /><label for="rating10" title="5 stars"></label>
+              <input v-model="starValue" type="radio" id="rating9" name="review" :value="'4.5'" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating8" name="review" :value="'4'" /><label for="rating8" title="4 stars"></label>
+              <input v-model="starValue" type="radio" id="rating7" name="review" :value="'3.5'" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating6" name="review" :value="'3'" /><label for="rating6" title="3 stars"></label>
+              <input v-model="starValue" type="radio" id="rating5" name="review" :value="'2.5'" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating4" name="review" :value="'2'" /><label for="rating4" title="2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating3" name="review" :value="'1.5'" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating2" name="review" :value="'1'" /><label for="rating2" title="1 star"></label>
+              <input v-model="starValue" type="radio" id="rating1" name="review" :value="'0.5'" /><label class="half" for="rating1" title="1/2 star"></label>
           </fieldset>
-          <button @click.prevent="submitReview">Envoyer</button>
+          <button @click="submitReview()">{{commentButtonValue}}</button>
         </form>
         </div>
         <div>
@@ -81,6 +60,8 @@
 import { postAppreciation } from '../services/MovieAPI';
 import {getUserInfo} from '../services/MovieAPI';
 import { useUserStore } from '../store/userStore.js';
+import {postMovieCritic}from '../services/MovieAPI';
+import {removeMovieFromBd}from '../services/MovieAPI';
     export default {
         props: {
             movie: {
@@ -93,7 +74,11 @@ import { useUserStore } from '../store/userStore.js';
                 isAdmin:false,
                 firstRemoveButtonPressed:false,
                 isConnected:false,
-                currentComment:Object
+                currentComment:Object,
+                user:Object,
+                commentaire:"",
+                starValue:"",
+                commentButtonValue:"envoyer"
             }
         },
         setup(){
@@ -101,22 +86,6 @@ import { useUserStore } from '../store/userStore.js';
            return { store }
         },
         methods: {
-          getSelectedRadioButton() {
-            var radios = document.getElementsByName('rating');
-            for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked) {
-                    return parseInt(radios[i].value);
-                }
-            }
-          },
-          getSelectedReviewRadioButton() {
-            var radios = document.getElementsByName('review');
-            for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked) {
-                    return parseFloat(radios[i].value);
-                }
-            }
-          },
           async submitAppreciation() {
             await postAppreciation(this.movie.id, this.getSelectedRadioButton());
           },
@@ -131,7 +100,9 @@ import { useUserStore } from '../store/userStore.js';
           firstRemoveButton(){
             this.firstRemoveButtonPressed=true;
           },
-          yesButtonRemoveFilm(){
+          async yesButtonRemoveFilm(){
+            removeMovieFromBd(this.store.token,this.$route.query.id)
+            this.$router.push({name:"home"})
             //method to remove movie here
           },
           noButtonRemoveFilm(){
@@ -148,16 +119,24 @@ import { useUserStore } from '../store/userStore.js';
           async checkUserConnected(){
             const user= await getUserInfo(this.store.getToken)
             if(user.role_id==1 ||user.role_id==2){
+              this.user=user
               this.isConnected=true
             }else{
               this.isConnected=false
             }
           },
-          submitReview(){
-
-            //submit review here
+          async submitReview(){
+            const review= await postMovieCritic(this.store.token,this.user.id,this.user.email,parseFloat(this.starValue),this.commentaire,this.$route.query.id())
           },
           getCurrentComment(){
+            for(co in getAllMovieComment()){
+              if(co.user_id==this.user.id){
+                this.commentButtonValue="modifier"
+                this.commentaire=co.commentaire
+                this.starValue=co.score
+                break
+              }
+            }
             //get our review here
           }
 

@@ -80,7 +80,6 @@ export async function updateCurrentUserPassword(password,token){
     return content.token;
 }
 export async function createUser(email,password,first_name,last_name){
-    console.log(email)
     const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/users', {
         method: 'POST',
         headers: {
@@ -151,4 +150,32 @@ export async function getOneFilm(id) {
 export async function getActorsForOneFilm(id) {
     const response = await fetch(NEW_BASE_URL + "/films/" + id + "/actors", headers);
     return await response.json();
+}
+
+export async function postMovieCritic(token,user_id,user_name,score,commentaire,movieID){
+    
+  const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/films/'+movieID+'/critics', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization':'Bearer '+token
+    },
+    body: JSON.stringify({user_id: user_id, user_name:user_name,score:score,commentaire:commentaire,date:Date.now()})
+  })
+  const content = await rawResponse.json();
+  return content.token;
+}
+export async function removeMovieFromBd(token,movieID){
+    
+  const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/films/'+movieID, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization':'Bearer '+token
+    },
+  })
+  const content = await rawResponse.json();
+  return content.token;
 }
