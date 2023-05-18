@@ -11,9 +11,6 @@
     import { useUserStore } from '../store/userStore.js';
     import{logoutUser}from '@/services/MovieAPI.js'
     export default {
-        data(){
-            LoggedIn:String
-        },
         setup(){
            const store= useUserStore()
            return { store }
@@ -38,6 +35,10 @@
             },
 
             isLoggedIn(){
+                console.log(this.store.token)
+                if(this.store.getToken==null){
+                    return false;
+                }
                 if(this.store.getToken!="user"){
                     return true
                 }else{
@@ -51,6 +52,7 @@
                      if(value==204){
                         this.store.setToken(null)
                         this.store.setName(null)
+                        showLoggedInText()
                      }
                 }else{
                     this.$router.push({name:'login'})
