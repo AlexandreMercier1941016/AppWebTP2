@@ -154,14 +154,13 @@ export async function getActorsForOneFilm(id) {
 
 
 export async function postFilm(id,created_at,updated_at,title,release_year,length,description,rating,language_id,special_features,image) {
-    /*const guestSession = await setUpGuestSessionId();
-    const guestSessionId = guestSession.guest_session_id;*/
-    //Faire la connexion avec le token
-
-
     const response = await fetch(NEW_BASE_URL + "/films", {
         method: 'POST',
-        headers,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+          },
         body: JSON.stringify({ 
             "id": id,
             "created_at": created_at,
@@ -207,11 +206,6 @@ export async function removeMovieFromBd(token,movieID){
 }
 
 export async function postCritic(token,id,created_at,updated_at,user_id,film_id,score,comment) {
-    /*const guestSession = await setUpGuestSessionId();
-    const guestSessionId = guestSession.guest_session_id;*/
-    //Faire la connexion avec le token
-
-
     const response = await fetch(NEW_BASE_URL + "/films" , {
         method: 'PUT',
         headers: {
