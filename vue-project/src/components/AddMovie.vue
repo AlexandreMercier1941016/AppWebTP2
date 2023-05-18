@@ -18,7 +18,7 @@
   
   <script>
   import axios from 'axios';
-  import authService from '../services/authService';
+  import auth from '../services/auth.js';
   
   export default {
     data() {
