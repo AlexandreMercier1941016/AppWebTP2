@@ -58,7 +58,14 @@
                 <!--form pour changer le mot de passe-->
                 <div v-if="changePassword">
                     <div class="formbuilder-text form-group field-password">
-                        <label for="password" class="formbuilder-text-label">mot de passe
+                        <label for="password" class="formbuilder-text-label">Ancien mot de passe
+                            <br>
+                            <span class="formbuilder-required">*</span>
+                        </label>
+                        <input v-model="oldPassword" type="password" class="form-control" name="password" maxlength="50" id="password" required="required" aria-required="true">
+                    </div>
+                    <div class="formbuilder-text form-group field-password">
+                        <label for="password" class="formbuilder-text-label">Mot de passe
                             <br>
                             <span class="formbuilder-required">*</span>
                         </label>
@@ -103,6 +110,7 @@
                 Prenom:"",
                 password:"",
                 confirmPassword:"",
+                oldPassword:"",
                 errorMessage:"",
                 isLoggedIn:false,
                 changePassword:false,
@@ -136,14 +144,17 @@
             async sendUser(){
                 try {
                     this.validateFormInput()
-                    if(this.isLoggedIn){
+                    if(this.isLoggedIn && !this.changePassword){
                         //modif here
-                        await updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom,this.store.getToken)
+                        let answer=await updateCurrentUser(this.nomUtilisateur,this.Nom,this.Prenom,this.store.getToken)
+                        if(answer.status==400){
+                            throw new Error("email déjà utilisé")
+                        }
                         this.errorMessage="utilisateur mis a jour !"
                     }else if(this.changePassword){
                         // update password here
                         if(this.password==this.confirmPassword){
-                            await updateCurrentUserPassword(this.password,this.store.getToken)
+                            await updateCurrentUserPassword(this.oldPassword,this.password,this.confirmPassword,this.store.getToken)
                         }
                         else{
                             this.errorMessage="les mots de passe ne sont pas pareil"
@@ -168,6 +179,11 @@
                     }
                 if(this.password!=this.confirmPassword){
                     throw new Error("les deux mots de passe ne correspondes pas")
+                }
+                if(this.password.length>0){
+                    if(this.password.length<6){
+                        throw new Error("le mot de passe doit avoir plus de 6 charactères")
+                    }
                 }
 
             },
