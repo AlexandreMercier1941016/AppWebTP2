@@ -2,6 +2,7 @@
     <div>
         <p><a @click="onClickAction()">{{this.showLoggedInText()}}</a></p>
         <p><a @click="updateOrCreateUser()">{{this.showAccountUpdateInText()}}</a></p>
+        <p><a @click="goHomeButton()">home</a></p>
     </div>
 </template>
 
@@ -10,9 +11,6 @@
     import { useUserStore } from '../store/userStore.js';
     import{logoutUser}from '@/services/MovieAPI.js'
     export default {
-        data(){
-            LoggedIn:String
-        },
         setup(){
            const store= useUserStore()
            return { store }
@@ -29,11 +27,18 @@
                 if(this.isLoggedIn()){
                     return "Modifier le compte";
                 }else{
-                    return "s'inscire"
+                    return "s'inscrire"
                 }
+            },
+            goHomeButton(){
+                this.$router.push({name:'home'})
             },
 
             isLoggedIn(){
+                console.log(this.store.token)
+                if(this.store.getToken==null){
+                    return false;
+                }
                 if(this.store.getToken!="user"){
                     return true
                 }else{
@@ -47,6 +52,7 @@
                      if(value==204){
                         this.store.setToken(null)
                         this.store.setName(null)
+                        showLoggedInText()
                      }
                 }else{
                     this.$router.push({name:'login'})

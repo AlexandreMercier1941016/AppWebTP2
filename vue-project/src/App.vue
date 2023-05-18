@@ -2,8 +2,8 @@
   <header class="basic-grid">
     <SearchDetails></SearchDetails>
     <h1>Bienvenue !</h1>
-    <LogoutDetails></LogoutDetails>
     <router-link v-if="isAdmin" to="/addMovie">Ajouter un film</router-link>
+        <LogoutDetails></LogoutDetails>
   </header>
   <RouterView />
 </template>
@@ -11,9 +11,9 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import SearchDetails from './components/SearchDetails.vue'
-import LogoutDetails from './components/LogoutDetails.vue'
 import { ref, onMounted } from 'vue';
 import auth from './services/auth.js';
+import LogoutDetails from './components/NavigationDetails.vue'
 
 export default {
   setup() {

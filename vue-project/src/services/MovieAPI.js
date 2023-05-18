@@ -53,6 +53,9 @@ export async function logoutUser(token){
     return content.status;
 }
 export async function updateCurrentUser(email,nom,prenom,token){
+    console.log(email,nom,prenom,token)
+    const obj={email:email,first_name: prenom,last_name:nom}
+    console.log(obj)
     const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user', {
         method: 'PATCH',
         headers: {
@@ -60,13 +63,15 @@ export async function updateCurrentUser(email,nom,prenom,token){
           'Content-Type': 'application/json',
           'Authorization':'Bearer '+token
         },
-        body: JSON.stringify({email: email, first_name: prenom,last_name:nom})
+        body: JSON.stringify(obj),
       })
-      const content = await rawResponse.json();
+      const content = await rawResponse;
+      console.log(rawResponse)
       return content;
 }
 
-export async function updateCurrentUserPassword(password,token){
+export async function updateCurrentUserPassword(oldPassword,newPassword,newPassword2,token){
+  console.log("allo2")
   const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/user/password', {
       method: 'PATCH',
       headers: {
@@ -74,10 +79,11 @@ export async function updateCurrentUserPassword(password,token){
         'Content-Type': 'application/json',
         'Authorization':'Bearer '+token
       },
-      body: JSON.stringify({password: password})
+      body: JSON.stringify({old_password:oldPassword,new_password: newPassword,confirm_new_password:newPassword2})
     })
-    const content = await rawResponse.json();
-    return content.token;
+    const content = await rawResponse;
+    console.log(content)
+    return content;
 }
 export async function createUser(email,password,first_name,last_name){
     const rawResponse = await fetch('https://laravel-e23.herokuapp.com/api/users', {
@@ -88,8 +94,8 @@ export async function createUser(email,password,first_name,last_name){
         },
         body: JSON.stringify({email: email, password: password,last_name:last_name,first_name:first_name})
       })
-      const content = await rawResponse.json();
-      return content.token;
+      const content = await rawResponse;
+      return content;
 }
 
 
