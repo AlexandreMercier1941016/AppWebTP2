@@ -11,33 +11,57 @@
         <p>Length: {{movie.runtime}} minutes</p>
         <p>Release Date: {{movie.release_date}}</p>
         <p>Official Site: {{movie.homepage }}</p>
-        <form>
-            <fieldset>
-                <span class="star-cb-group">
-                <input type="radio" id="rating-5" name="rating" value="5" />
-                <label for="rating-5">5</label>
-                <input type="radio" id="rating-4" name="rating" value="4" />
-                <label for="rating-4">4</label>
-                <input type="radio" id="rating-3" name="rating" value="3" />
-                <label for="rating-3">3</label>
-                <input type="radio" id="rating-2" name="rating" value="2" />
-                <label for="rating-2">2</label>
-                <input type="radio" id="rating-1" name="rating" value="1" />
-                <label for="rating-1">1</label>
-                <input type="radio" id="rating-0" name="rating" value="0" checked="checked" class="star-cb-clear" />
-                <label for="rating-0">0</label>
-                </span>
-                <button @click.prevent="submitAppreciation">
-                    Envoyer
-                </button>
-            </fieldset>
+        <div v-if="isAdmin">
+          <p>retirer le film</p>
+          <button @click="firstRemoveButton()">retirer le film</button>
+          <div v-if="firstRemoveButtonPressed">
+            <p>êtes-vous sur de vouloir retirer le film ?</p>
+            <button @click="yesButtonRemoveFilm()">oui</button>
+            <button @click="noButtonRemoveFilm()">non</button>
+          </div>
+        </div>
+        <div v-if="isConnected">
+          <h2>Commentaire :</h2>
+          <form>
+            <div class="formbuilder-text form-group field-passwordConfirm">
+                <label for="passwordConfirm" class="formbuilder-text-label">Laisser un commentaire (facultatif)
+                    <br>
+                    <span class="formbuilder-required">*</span>
+                </label>
+                <input  v-model="commentaire" type="text" class="form-control" name="commentaire" maxlength="255" id="commentaire" aria-required="true">
+            </div> 
+            <fieldset class="rate">
+              <input v-model="starValue" type="radio" id="rating10" name="review" :value="'5'" /><label for="rating10" title="5 stars"></label>
+              <input v-model="starValue" type="radio" id="rating9" name="review" :value="'4.5'" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating8" name="review" :value="'4'" /><label for="rating8" title="4 stars"></label>
+              <input v-model="starValue" type="radio" id="rating7" name="review" :value="'3.5'" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating6" name="review" :value="'3'" /><label for="rating6" title="3 stars"></label>
+              <input v-model="starValue" type="radio" id="rating5" name="review" :value="'2.5'" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating4" name="review" :value="'2'" /><label for="rating4" title="2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating3" name="review" :value="'1.5'" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+              <input v-model="starValue" type="radio" id="rating2" name="review" :value="'1'" /><label for="rating2" title="1 star"></label>
+              <input v-model="starValue" type="radio" id="rating1" name="review" :value="'0.5'" /><label class="half" for="rating1" title="1/2 star"></label>
+          </fieldset>
+          <button @click="submitReview()">{{commentButtonValue}}</button>
         </form>
+        </div>
+        <div>
+          <h3>Commentaires</h3>
+          <div v-for="comment in getAllMovieComment">
+            <p>commentaire : {{ comment.commentaire }}</p>
+            <p>nom : {{ comment.user_name}}</p>
+            <p>rating : {{ comment.date }}</p>
+          </div>
+        </div>
     </div>
 </template>
 
 <script>
 import { postAppreciation } from '../services/MovieAPI';
-
+import {getUserInfo} from '../services/MovieAPI';
+import { useUserStore } from '../store/userStore.js';
+import {postMovieCritic}from '../services/MovieAPI';
+import {removeMovieFromBd}from '../services/MovieAPI';
     export default {
         props: {
             movie: {
@@ -47,26 +71,86 @@ import { postAppreciation } from '../services/MovieAPI';
         data() {
             return {
                 title: "Détails du film",
+                isAdmin:false,
+                firstRemoveButtonPressed:false,
+                isConnected:false,
+                currentComment:Object,
+                user:Object,
+                commentaire:"",
+                starValue:"",
+                commentButtonValue:"envoyer"
             }
+        },
+        setup(){
+           const store= useUserStore()
+           return { store }
         },
         methods: {
-          getSelectedRadioButton() {
-            var radios = document.getElementsByName('rating');
-            for (var i = 0; i < radios.length; i++) {
-                if (radios[i].checked) {
-                    return parseInt(radios[i].value);
-                }
-            }
-        },
-        async submitAppreciation() {
+          async submitAppreciation() {
             await postAppreciation(this.movie.id, this.getSelectedRadioButton());
-        },
-    },
+          },
+          async isUserAdmin(){
+            const user= await getUserInfo(this.store.getToken)
+            if(user.role_id==1){
+              this.isAdmin=true
+            }else{
+              this.isAdmin=false
+            }
+          },
+          firstRemoveButton(){
+            this.firstRemoveButtonPressed=true;
+          },
+          async yesButtonRemoveFilm(){
+            removeMovieFromBd(this.store.token,this.$route.query.id)
+            this.$router.push({name:"home"})
+            //method to remove movie here
+          },
+          noButtonRemoveFilm(){
+            this.firstRemoveButtonPressed=false;
+          },
+          getAllMovieComment(){
+            return [...this.movie.critiques].sort((a,b) => {
+              let modifier = -1;
+              if(a[this.date] < b[this.date]) return -1 * modifier;
+              if(a[this.date] > b[this.date]) return 1 * modifier;
+              return 0;
+            })
+          },
+          async checkUserConnected(){
+            const user= await getUserInfo(this.store.getToken)
+            if(user.role_id==1 ||user.role_id==2){
+              this.user=user
+              this.isConnected=true
+            }else{
+              this.isConnected=false
+            }
+          },
+          async submitReview(){
+            const review= await postMovieCritic(this.store.token,this.user.id,this.user.email,parseFloat(this.starValue),this.commentaire,this.$route.query.id())
+          },
+          getCurrentComment(){
+            for(co in getAllMovieComment()){
+              if(co.user_id==this.user.id){
+                this.commentButtonValue="modifier"
+                this.commentaire=co.commentaire
+                this.starValue=co.score
+                break
+              }
+            }
+            //get our review here
+          }
+
+
+      },
+      beforeMount(){
+        this.isUserAdmin()
+        this.checkUserConnected()
+      }
 };
 </script>
 
 <style lang="css" scoped>
-
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 /* Source : https://codeconvey.com/css-star-rating-radio-buttons/ */
 .star-cb-group {
   /* remove inline-block whitespace */
@@ -120,4 +204,43 @@ import { postAppreciation } from '../services/MovieAPI';
   color: #e52;
   text-shadow: 0 0 1px #333;
 }
+
+/* Ratings widget */
+.rate {
+    display: inline-block;
+    border: 0;
+}
+/* Hide radio */
+.rate > input {
+    display: none;
+}
+/* Order correctly by floating highest to the right */
+.rate > label {
+    float: right;
+}
+/* The star of the show */
+.rate > label:before {
+    display: inline-block;
+    font-size: 2rem;
+    padding: .3rem .2rem;
+    margin: 0;
+    cursor: pointer;
+    font-family: FontAwesome;
+    content: "\f005 "; /* full star */
+}
+
+/* Half star trick */
+.rate .half:before {
+    content: "\f089 "; /* half star no outline */
+    position: absolute;
+    padding-right: 0;
+}
+/* Click + hover color */
+input:checked ~ label, /* color current and previous stars on checked */
+label:hover, label:hover ~ label { color: #73B100;  } /* color previous stars on hover */
+
+/* Hover highlights */
+input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #A6E72D;  } 
 </style>
