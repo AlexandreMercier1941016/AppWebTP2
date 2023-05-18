@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import authService from './services/authService';
+import auth from '../services/auth.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,14 +45,14 @@ const router = createRouter({
       component: () => import('../views/CreateAccountView.vue')
     },
     {
-      path: '/add-movie',
+      path: '/addMovie',
       name: 'AddMovie',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('./components/AddMovie.vue'),
+      component: () => import('../components/AddMovie.vue'),
       beforeEnter: async (to, from, next) => {
-        const isAdmin = await authService.checkAdmin();
+        const isAdmin = await auth.isUserAdmin();
         if (!isAdmin) {
           return next('/login'); 
         }
