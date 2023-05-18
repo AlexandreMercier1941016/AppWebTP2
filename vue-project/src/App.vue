@@ -13,14 +13,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import SearchDetails from './components/SearchDetails.vue'
 import LogoutDetails from './components/LogoutDetails.vue'
 import { ref, onMounted } from 'vue';
-import { isUserAdmin } from './services/auth.js';
+import auth from './services/auth.js';
 
 export default {
   setup() {
     const isAdmin = ref(false);
 
     onMounted(async () => {
-      isAdmin.value = isUserAdmin();
+      isAdmin.value = auth.isUserAdmin();
     });
 
     return {

@@ -1,4 +1,5 @@
 import { useUserStore } from '../store/userStore.js';
+import { getUserInfo } from '../services/MovieAPI.js';
 export default{
 setup(){
     const store= useUserStore()
