@@ -151,18 +151,27 @@
                             throw new Error("email déjà utilisé")
                         }
                         this.errorMessage="utilisateur mis a jour !"
-                    }else if(this.changePassword){
+                    }
+                    else if(this.changePassword){
                         // update password here
+                        console.log("allo")
                         if(this.password==this.confirmPassword){
-                            await updateCurrentUserPassword(this.oldPassword,this.password,this.confirmPassword,this.store.getToken)
-                        }
+                            let answer2=await updateCurrentUserPassword(this.oldPassword,this.password,this.confirmPassword,this.store.getToken)
+                            if(answer2.status!=200){
+                            throw new Error("L'ancient mot de passe ne correspond pas")
+                            }
+                            this.errorMessage="Mot de passe modifié !"
+                        }                        
                         else{
-                            this.errorMessage="les mots de passe ne sont pas pareil"
+                            throw new Error("les mots de passe ne sont pas pareil")
                         }
                     }
                     else{
                         //add here
-                        await createUser(this.nomUtilisateur,this.password,this.Prenom,this.Nom)
+                        let answer=await createUser(this.nomUtilisateur,this.password,this.Prenom,this.Nom)
+                        if(answer.status !=201){
+                            throw new Error("l'email est déjà pris ou des champs sont invalides")
+                        }
                         this.errorMessage="utilisateur créé !"
                         
                     }
