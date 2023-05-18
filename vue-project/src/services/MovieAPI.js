@@ -206,7 +206,7 @@ export async function removeMovieFromBd(token,movieID){
 }
 
 export async function postCritic(token,id,created_at,updated_at,user_id,film_id,score,comment) {
-    const response = await fetch(NEW_BASE_URL + "/films" , {
+    const response = await fetch(NEW_BASE_URL + "/films/" + id + "/critics", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -228,7 +228,7 @@ export async function postCritic(token,id,created_at,updated_at,user_id,film_id,
 }
 
 export async function postUser(id,remember_token,created_at,updated_at,password,email,last_name,first_name,role_id) {
-    const response = await fetch(NEW_BASE_URL + "/films" , {
+    const response = await fetch(NEW_BASE_URL + "/users" , {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
