@@ -9,7 +9,7 @@
     <select v-model="movie.rating" id="rating" class="form-control">
       <option v-for="option in ratingOptions" :key="option" :value="option">{{ option }}</option>
     </select>
-        <input v-model="movie.actors" type="text" placeholder="Acteurs" required />
+    <input v-model="actors" type="text" placeholder="Acteurs avec une virgule entre" required />
         <textarea v-model="movie.description" placeholder="Description du film" required></textarea>
         <input v-model="movie.language_id" type="text" placeholder="Id de la langue" required />
 
@@ -42,8 +42,8 @@
     methods: {
         async submitForm() {
     try {
-        const response = await postFilm(this.movie.title,this.movie.year,this.movie.duration,this.movie.description,this.movie.rating,this.movie.language_id,this.movie.actors,auth.getToken());
-      
+        let actorsTab = this.actors.split(',');
+        const response = await postFilm(this.movie.title,this.movie.year,this.movie.duration,this.movie.description,this.movie.rating,this.movie.language_id,actorsTab,auth.getToken());
         if (response && response.data && response.data.success) {
             this.message = 'Le film a été ajouté correctement.';
             this.movie = {
