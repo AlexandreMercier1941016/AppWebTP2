@@ -4,7 +4,9 @@
     <h1>Bienvenue !</h1>
     <LogoutDetails></LogoutDetails>
   </header>
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
 
 <script>
@@ -22,8 +24,11 @@ export default {
 
 <style scoped>
 .basic-grid {
-  display: grid;
-  grid-template-rows: repeat(0, 0fr);
-  text-align: top;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container{
+  width: 100%;
 }
 </style>

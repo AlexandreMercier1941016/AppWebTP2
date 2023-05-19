@@ -80,6 +80,7 @@
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  width: 100%;
   gap: 20px;
   padding: 20px;
 }
