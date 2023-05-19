@@ -2,7 +2,7 @@
   <header class="basic-grid">
     <SearchDetails></SearchDetails>
     <h1>Bienvenue !</h1>
-        <LogoutDetails></LogoutDetails>
+    <LogoutDetails></LogoutDetails>
   </header>
   <RouterView />
 </template>
