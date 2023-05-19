@@ -43,6 +43,9 @@
         async submitForm() {
     try {
         let actorsTab = this.actors.split(',');
+        console.log("Token:" + auth.getToken());
+        console.log("Actors:");
+        console.log(actorsTab);
         const response = await postFilm(this.movie.title,this.movie.year,this.movie.duration,this.movie.description,this.movie.rating,this.movie.language_id,actorsTab,auth.getToken());
         if (response && response.data && response.data.success) {
             this.message = 'Le film a été ajouté correctement.';
