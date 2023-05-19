@@ -195,7 +195,7 @@ import {removeMovieFromBd}from '../services/MovieAPI';
 .item {
   height: 30px;
   padding-left: 55px;
-  width: 100%;
+  width: 50%;
 }
 
 .star-cb-group > input:checked ~ label:before, .star-cb-group > input + label:hover ~ label:before, .star-cb-group > input + label:hover:before {
