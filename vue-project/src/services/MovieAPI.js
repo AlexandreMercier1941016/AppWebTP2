@@ -9,7 +9,7 @@ const RESOURCE_NAME_SEARCH = "search/movie";
 const RESOURCE_NAME_IMAGE = "/images";
 const RESOURCE_NAME_GENRE = "genre/movie/list";
 const RESOURCE_LOGIN="/login";
-const NEW_BASE_URL = "https://laravel-e23.herokuapp.com/api/";
+const NEW_BASE_URL = "https://laravel-e23.herokuapp.com/api";
 
 //methode pour le tp3
 //a fixer pour la route login
@@ -143,7 +143,8 @@ export async function getActorsForOneFilm(id) {
 }
 
 
-export async function postFilm(id,created_at,updated_at,title,release_year,length,description,rating,language_id,special_features,image) {
+export async function postFilm(title, release_year, length, description, rating, language_id, actors,token) {
+  //Je n'ai pas trouvé c'est quoi que l'api requiert comme champs, si c'est des string ou un tableau, etc. J'ai testé plusieurs configurations et je n'ai pas trouvé.
     const response = await fetch(NEW_BASE_URL + "/films", {
         method: 'POST',
         headers: {
@@ -151,18 +152,14 @@ export async function postFilm(id,created_at,updated_at,title,release_year,lengt
             'Content-Type': 'application/json',
             'Authorization':'Bearer '+token
           },
-        body: JSON.stringify({ 
-            "id": id,
-            "created_at": created_at,
-            "updated_at": updated_at,
+        body: JSON.stringify({
             "title": title,
             "release_year": release_year,
             "length": length,
             "description": description,
             "rating": rating,
             "language_id": language_id,
-            "special_features": special_features,
-            "image": image
+            "actors" : actors
         })
     });
     return await response.json();

@@ -4,8 +4,8 @@ export default{
 setup(){
     const store= useUserStore()
     return { store }
- },
-  async isUserAdmin(){
+},
+ async isUserAdmin(){
     //const user= await getUserInfo(this.store.getToken)
     const user= await getUserInfo(useUserStore().getToken)
     if(user.role_id==1){
@@ -13,5 +13,8 @@ setup(){
     }else{
       return false;
     }
-  }
+  },
+  getToken(){
+    return useUserStore().getToken;
+ }
 }
