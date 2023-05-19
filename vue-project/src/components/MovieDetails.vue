@@ -1,16 +1,14 @@
 <template>
   <h2>{{ title }}</h2>
     <div v-if="movie">
-        <h2>{{movie.original_title}}</h2>
+        <h2>{{movie.data.titre}}</h2>
         <!--img si poster path-->
-        <img  v-if="movie.poster_path" :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" width="200" style="float:right">
+        <img  v-if="movie.data.image" :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" width="200" style="float:right">
         <!--img si il n'y a pas de poster_path-->
-        <img v-else :src="'https://placehold.co/400x400'" style="float:right">
-        <h3>{{movie.overview}}</h3>
-        <p>Ratings: {{movie.vote_average}}</p>
-        <p>Length: {{movie.runtime}} minutes</p>
-        <p>Release Date: {{movie.release_date}}</p>
-        <p>Official Site: {{movie.homepage }}</p>
+        <img v-else :src="'https://placehold.co/300x400'" style="float:right">
+        <h3>{{movie.data.description}}</h3>
+        <p>Length: {{movie.data.longueur}} minutes</p>
+        <p>Release Date: {{movie.data.annee}}</p>
         <div v-if="isAdmin">
           <p>retirer le film</p>
           <button @click="firstRemoveButton()">retirer le film</button>
@@ -47,17 +45,18 @@
         </div>
         <div>
           <h3>Commentaires</h3>
-          <div v-for="comment in getAllMovieComment">
+          <br>
+          <div class="comment" v-for="comment in getAllMovieComment()">
             <p>commentaire : {{ comment.commentaire }}</p>
             <p>nom : {{ comment.user_name}}</p>
             <p>rating : {{ comment.date }}</p>
+            <br>
           </div>
         </div>
     </div>
 </template>
 
 <script>
-import { postAppreciation } from '../services/MovieAPI';
 import {getUserInfo} from '../services/MovieAPI';
 import { useUserStore } from '../store/userStore.js';
 import {postMovieCritic}from '../services/MovieAPI';
@@ -109,10 +108,10 @@ import {removeMovieFromBd}from '../services/MovieAPI';
             this.firstRemoveButtonPressed=false;
           },
           getAllMovieComment(){
-            return [...this.movie.critiques].sort((a,b) => {
+            return [...this.movie.data.critiques].sort((a,b) => {
               let modifier = -1;
-              if(a[this.date] < b[this.date]) return -1 * modifier;
-              if(a[this.date] > b[this.date]) return 1 * modifier;
+              if(a.date < b.date) return -1 * modifier;
+              if(a.date > b.date) return 1 * modifier;
               return 0;
             })
           },
@@ -126,7 +125,7 @@ import {removeMovieFromBd}from '../services/MovieAPI';
             }
           },
           async submitReview(){
-            const review= await postMovieCritic(this.store.token,this.user.id,this.user.email,parseFloat(this.starValue),this.commentaire,this.$route.query.id())
+            const review= await postMovieCritic(this.store.token,this.user.id,this.user.email,parseFloat(this.starValue),this.commentaire,this.$route.query.id)
           },
           getCurrentComment(){
             for(co in getAllMovieComment()){
@@ -142,7 +141,7 @@ import {removeMovieFromBd}from '../services/MovieAPI';
 
 
       },
-      beforeMount(){
+      mounted(){
         this.isUserAdmin()
         this.checkUserConnected()
       }
@@ -180,6 +179,12 @@ import {removeMovieFromBd}from '../services/MovieAPI';
   text-indent: -9999px;
   content: "☆";
   color: #888;
+}
+.comment > div {
+  flex: 50%; /* or - flex: 0 50% - or - flex-basis: 50% - */
+  /*demo*/
+  box-shadow: 0 0 0 1px black;
+  margin-bottom: 10px;
 }
 .star-cb-group > input:checked ~ label:before, .star-cb-group > input + label:hover ~ label:before, .star-cb-group > input + label:hover:before {
   content: "★";

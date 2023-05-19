@@ -99,18 +99,14 @@ export async function createUser(email,password,first_name,last_name){
 }
 
 
-export async function setUpGuestSessionId() {
-    const response = await fetch("https://api.themoviedb.org/3/authentication/guest_session/new" + apiKeyWithoutLanguage, headers);
-    return await response.json();
-}
 
 export async function getSingleMovie(id) {
-    const response = await fetch(baseURL + RESOURCE_NAME_SINGLE_MOVIE + id + apiKey, headers);
+    const response = await fetch("https://laravel-e23.herokuapp.com/api/films/" +id, headers);
     return await response.json();
 }
 
 export async function getWelcomePageMovies() {
-    const response = await fetch(baseURL + RESOURCE_NAME_UPCOMING+ apiKey, headers);
+    const response = await fetch("https://laravel-e23.herokuapp.com/api/films", headers);
     return await response.json();
 }
 
@@ -124,18 +120,6 @@ export async function getGenres() {
     return await response.json();
 }
 
-export async function postAppreciation(id, appreciation) {
-    const guestSession = await setUpGuestSessionId();
-    const guestSessionId = guestSession.guest_session_id;
-
-    const response = await fetch("https://api.themoviedb.org/3/movie/" + id + "/rating" + apiKeyWithoutLanguage + "&guest_session_id=" + guestSessionId, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ "value": appreciation*2 })
-    });
-    return await response.json();
-}
-
 
 
 export async function getAllActors() {
@@ -144,12 +128,12 @@ export async function getAllActors() {
 }
 
 export async function getAllFilms() {
-    const response = await fetch(NEW_BASE_URL + "/films", headers);
+    const response = await fetch("https://laravel-e23.herokuapp.com/api/films", headers);
     return await response.json();
 }
 
 export async function getOneFilm(id) {
-    const response = await fetch(NEW_BASE_URL + "/films/" + id, headers);
+    const response = await fetch("https://laravel-e23.herokuapp.com/api/films/"+id, headers);
     return await response.json();
 }
 

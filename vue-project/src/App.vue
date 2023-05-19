@@ -3,7 +3,7 @@
     <SearchDetails></SearchDetails>
     <h1>Bienvenue !</h1>
     <router-link v-if="isAdmin" to="/addMovie">Ajouter un film</router-link>
-        <LogoutDetails></LogoutDetails>
+    <LogoutDetails></LogoutDetails>
   </header>
   <RouterView />
 </template>

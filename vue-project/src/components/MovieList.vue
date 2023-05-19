@@ -4,11 +4,14 @@
         <ul class="movie-grid">
             <li v-for="movie in sortedFilteredPaginatedMovies" :key="movie.id"
                 :title="JSON.stringify(movie)">
-                <img :src="'https://image.tmdb.org/t/p/w500'+movie.poster_path" @click="onSelect(movie)">
+                <img  v-if="movie.image!=null" :src="movie.image" width="200" style="float:right">
+                <!--img si il n'y a pas de poster_path-->
+                <img v-else :src="'https://placehold.co/200x400'" style="float:right">
+                <hr>
                 <div class="movie-info">
-                <span class="name">{{ movie.title }}</span>
-                <span class="description">{{ movie.overview }}</span>
-                <span class="release_date">{{ movie.release_date }}</span>
+                <span class="name">{{ movie.titre }}</span>
+                <span class="description">{{ movie.description }}</span>
+                <span class="release_date">{{ movie.annee }}</span>
                 <button @click="onSelect(movie)">
                     consulterLeFilm &gt;
                 </button>
@@ -20,7 +23,6 @@
 
 <script>
     import MovieDetails from '@/components/MovieDetails.vue';
-    const imgURL="https://image.tmdb.org/t/p/w500"
     export default {
         props: {
             movies: {
@@ -48,7 +50,7 @@
         },
         computed: {
           filteredMovies() {
-            return this.movies.results
+            return this.movies.data
           },
           sortedfilteredMovies() {
             return [...this.filteredMovies].sort((a,b) => {
