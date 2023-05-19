@@ -5,9 +5,10 @@
         <input v-model="movie.title" type="text" placeholder="Titre du film" required />
         <input v-model="movie.year" type="text" placeholder="Année de production" :maxlength="4" required />
         <input v-model="movie.duration" type="text" placeholder="Durée en minutes" required />
-        <select v-model="movie.rating" required>
-          <option v-for="rating in ratings" :key="rating" :value="rating">{{ rating }}</option>
-        </select>
+        <label for="rating">Classement :</label>
+    <select v-model="movie.rating" id="rating" class="form-control">
+      <option v-for="option in ratingOptions" :key="option" :value="option">{{ option }}</option>
+    </select>
         <input v-model="movie.actors" type="text" placeholder="Acteurs" required />
         <textarea v-model="movie.description" placeholder="Description du film" required></textarea>
         <button type="submit">Ajouter</button>
@@ -31,7 +32,7 @@
           actors: '',
           description: ''
         },
-        ratings: [],
+        ratingOptions: ["G", "PG", "PG-13", "R", "NC-17"],
         message: ''
       };
     },
