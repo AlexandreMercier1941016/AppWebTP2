@@ -22,7 +22,7 @@ const FILMS="films"
 //a fixer pour la route login
 export async function getLoginToken(username,password){
     
-        const rawResponse = await fetch(NEW_BASE_URL+LOGIN, {
+        const rawResponse = await fetch(NEW_BASE_URL1+LOGIN, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -34,7 +34,7 @@ export async function getLoginToken(username,password){
         return content.token;
 }
 export async function getUserInfo(token){
-    const rawResponse = await fetch(NEW_BASE_URL+USER, {
+    const rawResponse = await fetch(NEW_BASE_URL1+USER, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -47,7 +47,7 @@ export async function getUserInfo(token){
       return content;
 }
 export async function logoutUser(token){
-  const rawResponse = await fetch(NEW_BASE_URL+LOGOUT, {
+  const rawResponse = await fetch(NEW_BASE_URL1+LOGOUT, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -63,7 +63,7 @@ export async function updateCurrentUser(email,nom,prenom,token){
     console.log(email,nom,prenom,token)
     const obj={email:email,first_name: prenom,last_name:nom}
     console.log(obj)
-    const rawResponse = await fetch(NEW_BASE_URL+USER, {
+    const rawResponse = await fetch(NEW_BASE_URL1+USER, {
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
@@ -79,7 +79,7 @@ export async function updateCurrentUser(email,nom,prenom,token){
 
 export async function updateCurrentUserPassword(oldPassword,newPassword,newPassword2,token){
   console.log("allo2")
-  const rawResponse = await fetch(NEW_BASE_URL+USER+PASSWORD, {
+  const rawResponse = await fetch(NEW_BASE_URL1+USER+PASSWORD, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
@@ -93,7 +93,7 @@ export async function updateCurrentUserPassword(oldPassword,newPassword,newPassw
     return content;
 }
 export async function createUser(email,password,first_name,last_name){
-    const rawResponse = await fetch(NEW_BASE_URL+USER, {
+    const rawResponse = await fetch(NEW_BASE_URL1+USER, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -108,17 +108,17 @@ export async function createUser(email,password,first_name,last_name){
 
 
 export async function getSingleMovie(id) {
-    const response = await fetch(NEW_BASE_URL+FILMS+"/"+id, headers);
+    const response = await fetch(NEW_BASE_URL1+FILMS+"/"+id, headers);
     return await response.json();
 }
 
 export async function getWelcomePageMovies() {
-    const response = await fetch(NEW_BASE_URL+FILMS, headers);
+    const response = await fetch(NEW_BASE_URL1+FILMS, headers);
     return await response.json();
 }
 
 export async function getFilteredMoviesByKeyWords(keywords,year,genre) {
-    const response = await fetch(NEW_BASE_URL+FILMS+ "&keywords=" + keywords + "&rating=" + year + "&year=" + genre, headers);
+    const response = await fetch(NEW_BASE_URL1+FILMS+ "&keywords=" + keywords + "&rating=" + year + "&year=" + genre, headers);
     return await response.json();
 }
 
@@ -135,12 +135,12 @@ export async function getAllActors() {
 }
 
 export async function getAllFilms() {
-    const response = await fetch(NEW_BASE_URL+FILMS, headers);
+    const response = await fetch(NEW_BASE_URL1+FILMS, headers);
     return await response.json();
 }
 
 export async function getOneFilm(id) {
-    const response = await fetch(NEW_BASE_URL+FILMS+"/"+id, headers);
+    const response = await fetch(NEW_BASE_URL1+FILMS+"/"+id, headers);
     return await response.json();
 }
 
